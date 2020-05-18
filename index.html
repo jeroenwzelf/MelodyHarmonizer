@@ -10,12 +10,12 @@
 	<!-- Font Awesome -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"></script>
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js">
-	<!-- Google Fonts -->
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
 	<!-- Bootstrap core CSS -->
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
 	<!-- Material Design Bootstrap -->
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.15.0/css/mdb.min.css" rel="stylesheet">
+	<!--Material Design custom theme-->
+	<script type="text/scss" src="scss/custom.scss"></script>
 	<!-- Bootstrap tooltips -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
 	<!-- Bootstrap core JavaScript -->
@@ -26,19 +26,22 @@
 
 <body>
 	<div id="page">
+		<nav class="navbar navbar-light bg-primary">
+			<a class="navbar-brand" href="#">MIDI Melody Harmonizer</a>
+		</nav>
 		<div id="sessionControlContainer">
 			<div id="midiInputContainer" class="dropright midiContainer">
-				<button id="chooseMidiInputButton" class="btn btn-secondary dropdown-toggle chooseMidiDeviceButton" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-music"></i> MIDI In</button>
+				<button id="chooseMidiInputButton" class="btn btn-info btn-lg dropdown-toggle chooseMidiDeviceButton" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-music"></i> MIDI In</button>
 				<div id="midiInputDevicesContainer" class="dropdown-menu midiDevicesContainer" aria-labelledby="chooseMidiOutputButton">No MIDI devices.</div>
 				<div id="midiInputDeviceSelected"></div>
 			</div>
 			<div id="midiOutputContainer" class="dropright midiContainer">
-				<button id="chooseMidiOutputButton" class="btn btn-secondary dropdown-toggle chooseMidiDeviceButton" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-music"></i> MIDI out</button>
+				<button id="chooseMidiOutputButton" class="btn btn-info btn-lg dropdown-toggle chooseMidiDeviceButton" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-music"></i> MIDI out</button>
 				<div id="midiOutputDevicesContainer" class="dropdown-menu midiDevicesContainer" aria-labelledby="chooseMidiOutputButton">No MIDI devices.</div>
 				<div id="midiOutputDeviceSelected"></div>
 			</div>
 
-			<button class="btn btn-secondary" id="contextbutton">Start!</button>
+			<button class="btn btn-info btn-lg" id="contextbutton">Start!</button>
 			<!-- <small>Input a tempo between 50 - 280 bpm: </small> -->
 			<div id="sessionInputContainer">
 				<!-- <input id="sessionBpmInput" placeholder="120"> -->

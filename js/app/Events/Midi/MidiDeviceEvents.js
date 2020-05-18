@@ -1,16 +1,16 @@
 let MidiDeviceEvents = (function() {
     return {
         noteOnReceived: "noteOnReceived",
-        fireNoteOnReceived: function (device, midimessage) {
-            $(document).trigger($.Event(this.noteOnReceived, { device: device, midimessage: midimessage} ));
+        fireNoteOnReceived: function (device, midiMessage) {
+            $(document).trigger($.Event(this.noteOnReceived, { device: device, midiMessage: midiMessage} ));
         },
         noteOffReceived: "noteOffReceived",
-        fireNoteOffReceived: function (device, midimessage) {
-            $(document).trigger($.Event(this.noteOffReceived, { device: device, midimessage: midimessage} ));
+        fireNoteOffReceived: function (device, midiMessage) {
+            $(document).trigger($.Event(this.noteOffReceived, { device: device, midiMessage: midiMessage} ));
         },
         midiMessageReceived: "midiMessageReceived",
-        fireMidiMessageReceived: function (device, midimessage) {
-            $(document).trigger($.Event(this.midiMessageReceived, { device: device, midimessage: midimessage} ));
+        fireMidiMessageReceived: function (device, midiMessage) {
+            $(document).trigger($.Event(this.midiMessageReceived, { device: device, midiMessage: midiMessage} ));
         },
     };
 })();
