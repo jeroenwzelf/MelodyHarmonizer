@@ -16,10 +16,10 @@ let MidiOutput = function(device) {
 			id: device.id,
 
 			channel: function(_channel) {
-				if (_channel)
-					return channel;
+				if (_channel != null)
+					channel = _channel;
 
-				channel = _channel;
+				return channel;
 			},
 
 			noteOn: function(key, velocity) {

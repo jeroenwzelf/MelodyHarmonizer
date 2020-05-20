@@ -14,14 +14,10 @@
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
 	<!-- Material Design Bootstrap -->
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.15.0/css/mdb.min.css" rel="stylesheet">
-	<!--Material Design custom theme-->
-	<script type="text/scss" src="scss/custom.scss"></script>
 	<!-- Bootstrap tooltips -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
 	<!-- Bootstrap core JavaScript -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
-
-	<script type="module" src="js/ui/UI.js"></script>
 </head>
 
 <body>
@@ -41,7 +37,7 @@
 				<div id="midiOutputDeviceSelected"></div>
 			</div>
 
-			<button class="btn btn-info btn-lg" id="contextbutton">Start!</button>
+			<button class="btn btn-info btn-lg" id="sessionStartButton">Start!</button>
 			<!-- <small>Input a tempo between 50 - 280 bpm: </small> -->
 			<div id="sessionInputContainer">
 				<!-- <input id="sessionBpmInput" placeholder="120"> -->
@@ -50,7 +46,7 @@
 	</div>
 
 	<script type="module">
-		import UI from "./js/ui/UI.js";
-		window.onload = () => UI.init();
+		import App from "./js/app/App.js";
+		window.onload = () => App.Events.Window.fireLoad();
 	</script>
 </body>

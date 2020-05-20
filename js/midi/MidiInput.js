@@ -13,6 +13,7 @@ let MidiInput = function(device) {
 
 			App.Events.Midi.Device.fireMidiMessageReceived(device, message);
 
+			// noinspection FallThroughInSwitchStatementJS
 			switch (message.event) {
 				case 0x90:
 					if (message.velocity !== 0) {
@@ -28,10 +29,10 @@ let MidiInput = function(device) {
 			device: device,
 
 			channel: function(_channel) {
-				if (_channel)
-					return channel;
+				if (_channel != null)
+					channel = _channel;
 
-				channel = _channel;
+				return channel;
 			},
 
 			destroy: function() {

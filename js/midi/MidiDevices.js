@@ -9,15 +9,15 @@ let MidiDevices = function(midi) {
 		let i = midi.inputs.values();
 		for (let device = i.next(); device && !device.done; device = i.next())
 			inputs.push(MidiInput(device.value));
-		App.Events.Midi.Devices.fireMidiInputDevicesChanged(midi.inputs);
+		App.Events.Midi.Devices.fireInputDevicesChanged(midi.inputs);
 
 		i = midi.outputs.values();
 		for (let device = i.next(); device && !device.done; device = i.next())
 			outputs.push(MidiOutput(device.value));
-		App.Events.Midi.Devices.fireMidiOutputDevicesChanged(midi.outputs);
+		App.Events.Midi.Devices.fireOutputDevicesChanged(midi.outputs);
 
-		App.Events.subscribe(App.Events.UI.MidiDevices.midiInputDeviceSelected, function(e) { input = e.device; });
-		App.Events.subscribe(App.Events.UI.MidiDevices.midiOutputDeviceSelected, function(e) { output = e.device; });
+		App.Events.subscribe(App.Events.UI.MidiDevices.inputDeviceSelected, function(e) { input = e.device; });
+		App.Events.subscribe(App.Events.UI.MidiDevices.outputDeviceSelected, function(e) { output = e.device; });
 
 		return {
 			init: function(midi) { return init(midi); },
@@ -30,6 +30,7 @@ let MidiDevices = function(midi) {
 					input.destroy();
 
 				input = inputs.find(device => device.id === id);
+				return input;
 			},
 
 			output: function(id) {
@@ -40,6 +41,7 @@ let MidiDevices = function(midi) {
 					output.destroy();
 
 				output = outputs.find(device => device.id === id);
+				return output;
 			},
 		};
 	})(midi);
