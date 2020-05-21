@@ -1,4 +1,5 @@
 import Session from "../session/Session.js";
+import Constants from "./constants/Constants.js";
 import Events from "./events/Events.js";
 import UI from "../ui/UI.js";
 
@@ -7,6 +8,7 @@ let App = (function() {
 
     return {
         Session: Session,
+        Constants: Constants,
         Events: Events,
         UI: UI,
     };

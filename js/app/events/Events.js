@@ -11,6 +11,7 @@ let Events = (function() {
         UI: UiEvents,
 
         subscribe: function(events, handler) { $(document).on(events, handler); },
+        unsubscribe: function(events, handler) { $(document).off(events, handler); },
     };
 })();
 

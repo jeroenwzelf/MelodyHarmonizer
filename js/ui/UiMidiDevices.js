@@ -1,5 +1,5 @@
-import MidiContext from "../midi/MidiContext.js";
 import App from "../app/App.js";
+import MidiContext from "../midi/MidiContext.js";
 
 let UiMidiDevices = function() {
 	return (function() {

@@ -3,11 +3,12 @@ import TimerWorkerMessage from "./TimerWorkerMessage.js";
 let intervalId;
 
 function start(bpm) {
-    intervalId = setInterval(() => tick(), (60 / bpm) * 1000);
+    intervalId = setInterval(tick(), (60 / bpm) * 1000);
 }
 
 function tick() {
     postMessage(TimerWorkerMessage.tickMessage());
+    return tick;
 }
 
 function stop() {
