@@ -8,7 +8,7 @@ let TimerWorkerMessage = (function() {
         stop: "stop",
         stopMessage: function() { return message(this.stop); },
         tick: "tick",
-        tickMessage: function(tick) { return message(this.tick, { tick: tick }); }
+        tickMessage: function(timestamp) { return message(this.tick, { timestamp: timestamp }); }
     };
 })();
 

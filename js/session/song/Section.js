@@ -1,17 +1,18 @@
 import App from "../../app/App.js";
 import Measure from "./Measure.js";
 
-let Section = function(section) {
-    return (function(section) {
+let Section = function(id) {
+    return (function(id) {
         let measures = [];
         for (let i=0; i<App.Constants.Session.Song.measuresInSection; ++i)
-            measures.push(Measure(i, section));
+            measures.push(Measure(i, id));
 
         return {
-            section: section,
+            id: id,
             measures: measures,
+            timestamp: null,
         };
-    })(section);
+    })(id);
 };
 
 export default Section;

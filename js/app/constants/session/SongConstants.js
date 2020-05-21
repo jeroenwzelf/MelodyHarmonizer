@@ -1,8 +1,14 @@
 let SongConstants = (function() {
+    let notesInBeat = 4;
+    let beatsInMeasure = 4;
+    let measuresInSection = 4;
+
     return {
-        notesInBeat: 4,
-        beatsInMeasure: 4,
-        measuresInSection: 4,
+        notesInBeat: notesInBeat,
+        beatsInMeasure: beatsInMeasure,
+        measuresInSection: measuresInSection,
+
+        beatsInSection: measuresInSection * beatsInMeasure,
     }
 })();
 

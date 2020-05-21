@@ -7,7 +7,7 @@ function start(bpm) {
 }
 
 function tick() {
-    postMessage(TimerWorkerMessage.tickMessage());
+    postMessage(TimerWorkerMessage.tickMessage(Date.now()));
     return tick;
 }
 

@@ -7,7 +7,7 @@ let TimerWorker = function() {
 
         Instance.onmessage = function(e) {
             switch(e.data.message) {
-                case TimerWorkerMessage.tick: App.Events.Session.Timer.fireTick(); return;
+                case TimerWorkerMessage.tick: App.Events.Session.Timer.fireTick(e.data.args.timestamp); return;
                 default:
                     console.log("unsupported message: " + e.data.message);
             }

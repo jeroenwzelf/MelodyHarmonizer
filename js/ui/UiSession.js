@@ -3,7 +3,7 @@ import App from "../app/App.js";
 let UiSession = function() {
     let sessionStartStopButton = $("#sessionStartStopButton");
 
-    stopButtonClicked();
+    sessionStartStopButton.on("click", startButtonClicked);
 
     function startButtonClicked() {
         sessionStartStopButton.text("Stop!");

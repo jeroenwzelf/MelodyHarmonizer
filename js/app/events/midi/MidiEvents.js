@@ -1,10 +1,8 @@
-import MidiDevicesEvents from "./MidiDevicesEvents.js";
-import MidiDeviceEvents from "./MidiDeviceEvents.js";
+import MidiDevicesEvents from "./devices/MidiDevicesEvents.js";
 
 let MidiEvents = (function() {
     return {
         Devices: MidiDevicesEvents,
-        Device: MidiDeviceEvents,
     }
 })();
 

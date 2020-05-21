@@ -6,22 +6,22 @@ let MidiInput = function(device) {
 		let channel = 0;
 
 		device.onmidimessage = function(event) {
-			let message = MidiMessage(event);
+			let message = MidiMessage(event.data);
 
 			if (message.channel !== channel)
 				return;
 
-			App.Events.Midi.Device.fireMidiMessageReceived(device, message);
+			App.Events.Midi.Devices.fireMidiMessageReceived(device, message);
 
 			// noinspection FallThroughInSwitchStatementJS
 			switch (message.event) {
 				case 0x90:
 					if (message.velocity !== 0) {
-						App.Events.Midi.Device.fireNoteOnReceived(device, message);
+						App.Events.Midi.Devices.fireNoteOnReceived(device, message);
 						return;
 					}
 				case 0x80:
-					App.Events.Midi.Device.fireNoteOffReceived(device, message);
+					App.Events.Midi.Devices.fireNoteOffReceived(device, message);
 			}
 		};
 

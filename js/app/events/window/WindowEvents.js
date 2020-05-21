@@ -1,6 +1,6 @@
 let WindowEvents = (function() {
     return {
-        load: "window.load",
+        load: "load/window",
         fireLoad: function() { $(document).trigger($.Event(this.load)); },
     };
 })();

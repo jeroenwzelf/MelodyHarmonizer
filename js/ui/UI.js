@@ -1,14 +1,15 @@
 import UiMidiDevices from "./UiMidiDevices.js";
+import UiInputViewer from "./UiInputViewer.js";
+import UiOutputViewer from "./UiOutputViewer.js";
 import UiSession from "./UiSession.js";
 
 const UI = (function() {
-	let uiMidiContext;
-	let uiSession;
-
 	return {
 		init: function() {
-			uiMidiContext = UiMidiDevices();
-			uiSession = UiSession();
+			UiMidiDevices();
+			UiInputViewer();
+			UiOutputViewer();
+			UiSession();
 		},
 	};
 })();

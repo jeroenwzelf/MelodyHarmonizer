@@ -1,7 +1,7 @@
 let TimerEvents = (function() {
     return {
-        tick: "session.timer.tick",
-        fireTick: function() { $(document).trigger($.Event(this.tick)); },
+        tick: "tick/timer/session",
+        fireTick: function(timestamp) { $(document).trigger($.Event(this.tick, { timestamp: timestamp } )); },
     };
 })();
 

@@ -1,11 +1,11 @@
-let MidiMessage = function(event, channel, key, velocity, time) {
+let MidiMessage = function(event, channel, key, velocity, timestamp) {
 	if (channel != null)
 		return {
 			event: event,
 			channel: channel,
 			key: key,
 			velocity: velocity,
-			time: time,
+			timestamp: timestamp,
 		};
 
 	// Incoming MIDI message to MidiMessage

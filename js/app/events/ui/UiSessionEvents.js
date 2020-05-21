@@ -1,8 +1,8 @@
 let UiSessionEvents = (function() {
     return {
-        startButtonClicked: "ui.session.startbutton.clicked",
+        startButtonClicked: "clicked/startbutton/session/ui",
         fireStartButtonClicked: function() { $(document).trigger($.Event(this.startButtonClicked)); },
-        stopButtonClicked: "ui.session.stopbutton.clicked",
+        stopButtonClicked: "clicked/stopbutton/session/ui",
         fireStopButtonClicked: function() { $(document).trigger($.Event(this.stopButtonClicked)); },
     };
 })();
