@@ -2,9 +2,11 @@ import App from "../app/App.js";
 import TimerWorker from "./timer/TimerWorker.js";
 import ClickGenerator from "../generator/ClickGenerator.js";
 import SongNavigator from "./song/SongNavigator.js";
+import LastNotePlayedToChordAi from "../app/ai/experiment/LastNotePlayedToChordAi.js";
 
 let Session = (function() {
     let timer, metronome;
+    let AI;
     const songNavigator = SongNavigator();
     const bpm = 95;
     const beatLengthMillis = 60000 / bpm;
@@ -16,10 +18,11 @@ let Session = (function() {
         timer.start(bpm);
 
         App.Events.subscribe(App.Events.Midi.Devices.Input.noteOnReceived, noteOnReceived);
+        AI = LastNotePlayedToChordAi(songNavigator);
     }
 
     function noteOnReceived(e) {
-        let beat = songNavigator.currentBeat();
+        let beat = songNavigator.song.getBeat(songNavigator.current());
 
         let noteTimeInBeat = e.midiMessage.timestamp - beat.timestamp;
         let percentageNoteLocation = noteTimeInBeat / beatLengthMillis;
@@ -29,9 +32,12 @@ let Session = (function() {
 
     function tick(event) {
         const position = songNavigator.next();
-        songNavigator.timestamp(event.timestamp);
+        songNavigator.song.timestamp(position, event.timestamp);
 
-        if (position.beat === 0) metronome.clickHard();
+        if (position.beat === 0) {
+            metronome.clickHard();
+            // TODO: play chord using send event to selected output midi device
+        }
         else metronome.clickSoft();
     }
 
