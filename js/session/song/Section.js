@@ -37,7 +37,7 @@ let Section = function(id) {
                 previous = _previous;
                 if (previous.next() == null) previous.setNext(this);
 
-                measures[0].setPrevious(next.measures[next.measures.length - 1]);
+                measures[0].setPrevious(previous.measures[previous.measures.length - 1]);
             },
         };
     })(id);

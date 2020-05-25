@@ -8,15 +8,15 @@ let Session = (function() {
     let timer, metronome;
     let AI;
     const songNavigator = SongNavigator();
+
     const bpm = 95;
     const beatLengthMillis = 60000 / bpm;
 
     function start() {
         metronome = ClickGenerator();
-
         App.Events.subscribe(App.Events.Session.Timer.tick, tick);
-        timer.start(bpm);
 
+        timer.start(bpm);
         App.Events.subscribe(App.Events.Midi.Devices.Input.noteOnReceived, noteOnReceived);
         AI = LastNotePlayedToChordAi(songNavigator);
     }
@@ -36,7 +36,13 @@ let Session = (function() {
 
         if (position.beat === 0) {
             metronome.clickHard();
-            // TODO: play chord using send event to selected output midi device
+            App.Events.Midi.Devices.Output.fireNotesOff();
+
+            let chord = songNavigator.song.getMeasure(position).chord;
+            if (chord != null) {
+                chord.play();
+                App.Events.Session.Song.fireChordChange(chord);
+            }
         }
         else metronome.clickSoft();
     }

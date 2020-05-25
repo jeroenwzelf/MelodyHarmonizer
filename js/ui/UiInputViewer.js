@@ -5,7 +5,7 @@ let UiInputViewer = function() {
     let midiInputNote = $("#midiInputNote");
 
     App.Events.subscribe(App.Events.Midi.Devices.Input.noteOnReceived, function(e) {
-        midiInputNote.text(MidiNotes.toString(e.midiMessage.key));
+        midiInputNote.text(MidiNotes.keyToString(e.midiMessage.key));
     });
 
     App.Events.subscribe(App.Events.Midi.Devices.Input.noteOffReceived, function() {

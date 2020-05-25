@@ -1,8 +1,10 @@
 import MidiInputDeviceEvents from "./MidiInputDeviceEvents.js";
+import MidiOutputDeviceEvents from "./MidiOutputDeviceEvents.js";
 
 let MidiDevicesEvents = (function() {
     return {
         Input: MidiInputDeviceEvents,
+        Output: MidiOutputDeviceEvents,
 
         inputDevicesChanged: "changed/inputdevices/devices/midi",
         fireInputDevicesChanged: function(devices) {

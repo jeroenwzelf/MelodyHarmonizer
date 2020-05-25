@@ -12,7 +12,7 @@ let SongNavigator = function() {
             next: function() {
                 position = position.next();
 
-                if (position.section >= this.song.sections.length)
+                if (position.section >= this.song.sections.length - 1)
                     this.song.addSection();
 
                 return position;

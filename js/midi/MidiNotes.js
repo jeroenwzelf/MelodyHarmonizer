@@ -1,11 +1,32 @@
+import Notes from "../harmony/Notes.js";
+
 let MidiNotes = (function() {
-    let notes = [ "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B" ];
     return {
-        toString: function(key) {
+        keyToString: function(key) {
             let octave = Math.floor(key / 12);
             let note = (key % 12);
-            return notes[note] + octave;
-        }
+            return Notes.notes[note] + octave;
+        },
+        keysToString: function(keys) {
+            let strings = [];
+            for (let key of keys)
+                strings.push(this.keyToString(key));
+
+            return strings;
+        },
+        stringToKey: function(note) {
+            let key = Notes.notes.indexOf(note);
+            let octave = 4;
+
+            return key + (Notes.notes.length * octave);
+        },
+        stringsToKey: function(notes) {
+            let keys = [];
+            for (let note of notes)
+                keys.push(this.stringToKey(note));
+
+            return keys;
+        },
     };
 })();
 

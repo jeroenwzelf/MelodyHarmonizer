@@ -60,3 +60,36 @@ body * {
     background: #eee;
     font-weight: bold;
 }
+
+#sessionInfoContainer {
+    padding: 20px;
+    display: flex;
+    width: 28em;
+
+    flex-direction: column;
+}
+
+#sessionInfoContainer > * {
+    padding: 10px;
+    flex-basis: 20px;
+}
+
+#midiInputViewerContainer {
+    display: flex;
+    flex-direction: row;
+    flex-basis: 20px;
+}
+
+#midiInputViewerContainer > * {
+    flex-basis: 100px;
+}
+
+#midiOutputViewerContainer {
+    display: flex;
+    flex-direction: row;
+    flex-basis: 20px;
+}
+
+#midiOutputViewerContainer > * {
+    flex-basis: 20px;
+}

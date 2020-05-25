@@ -13,7 +13,7 @@ let MidiOutput = function(device) {
 		}
 
 		return {
-			id: device.id,
+			device: device,
 
 			channel: function(_channel) {
 				if (_channel != null)
