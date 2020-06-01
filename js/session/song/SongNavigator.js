@@ -1,7 +1,7 @@
 import Song from "./Song.js";
 import Position from "./Position.js";
 
-let SongNavigator = function() {
+const SongNavigator = function() {
     return (function() {
         let position = Position(-1, -1, -1);
 

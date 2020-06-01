@@ -1,4 +1,4 @@
-let TimerWorkerMessage = (function() {
+const TimerWorkerMessage = (function() {
     function message(message, args) {
         return { message: message, args: args };
     }

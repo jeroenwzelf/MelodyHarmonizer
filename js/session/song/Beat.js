@@ -1,6 +1,6 @@
 import App from "../../app/App.js";
 
-let Beat = function(id, measureId) {
+const Beat = function(id, measureId) {
     return (function(id, measureId) {
         let next = null, previous = null;
 

@@ -1,20 +1,20 @@
 import App from "../app/App.js";
 import MidiContext from "../midi/MidiContext.js";
 
-let UiMidiDevices = function() {
-	let chooseMidiInputButton = $("#chooseMidiInputButton");
-	let midiInputDeviceSelected = $("#midiInputDeviceSelected");
-	let midiInputDevicesContainer = $("#midiInputDevicesContainer");
+const UiMidiDevices = function() {
+	const chooseMidiInputButton = $("#chooseMidiInputButton");
+	const midiInputDeviceSelected = $("#midiInputDeviceSelected");
+	const midiInputDevicesContainer = $("#midiInputDevicesContainer");
 
-	let chooseMidiOutputButton = $("#chooseMidiOutputButton");
-	let midiOutputDeviceSelected = $("#midiOutputDeviceSelected");
-	let midiOutputDevicesContainer = $("#midiOutputDevicesContainer");
+	const chooseMidiOutputButton = $("#chooseMidiOutputButton");
+	const midiOutputDeviceSelected = $("#midiOutputDeviceSelected");
+	const midiOutputDevicesContainer = $("#midiOutputDevicesContainer");
 
 	chooseMidiInputButton.on("click", () => MidiContext.init());
 	chooseMidiOutputButton.on("click",() => MidiContext.init());
 
 	function addMidiDevice(device, container) {
-		let element = $("<li>").addClass("dropdown-item mididevice");
+		const element = $("<li>").addClass("dropdown-item mididevice");
 		element.text(device.name);
 		element.attr("id", device.id);
 		container.append(element);

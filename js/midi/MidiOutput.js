@@ -1,6 +1,6 @@
 import MidiMessage from "./MidiMessage.js";
 
-let MidiOutput = function(device) {
+const MidiOutput = function(device) {
 	return (function(device) {
 		let channel = 0, notesActive = [];
 

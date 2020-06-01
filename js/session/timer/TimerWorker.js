@@ -1,9 +1,9 @@
 import App from "../../app/App.js";
 import TimerWorkerMessage from "./TimerWorkerMessage.js";
 
-let TimerWorker = function() {
+const TimerWorker = function() {
     return (function() {
-        let Instance = new Worker("js/session/timer/TimerWorkerInstance.js", { type: "module" });
+        const Instance = new Worker("js/session/timer/TimerWorkerInstance.js", { type: "module" });
 
         Instance.onmessage = function(e) {
             switch(e.data.message) {

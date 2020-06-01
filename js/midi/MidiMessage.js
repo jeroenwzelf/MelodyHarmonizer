@@ -1,4 +1,4 @@
-let MidiMessage = function(event, channel, key, velocity, timestamp) {
+const MidiMessage = function(event, channel, key, velocity, timestamp) {
 	if (channel != null)
 		return {
 			event: event,

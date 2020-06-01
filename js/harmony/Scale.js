@@ -1,7 +1,7 @@
 import Chords from "./Chords.js";
 
-let Scale = function(notes) {
-    let scale = (function(notes) {
+const Scale = function(notes) {
+    const scale = (function(notes) {
         return {
             notes: notes,
             chords: null,

@@ -1,7 +1,7 @@
 import App from "../../app/App.js";
 import Measure from "./Measure.js";
 
-let Section = function(id) {
+const Section = function(id) {
     return (function(id) {
         let measures = [];
         let next = null, previous = null;

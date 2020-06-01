@@ -2,7 +2,7 @@ import App from "../app/App.js";
 import MidiNotes from "../midi/MidiNotes.js";
 import ChordType from "./ChordType.js";
 
-let Chord = function(root, notes) {
+const Chord = function(root, notes) {
     return {
         root: root,
         type: ChordType.inferChordType(notes),

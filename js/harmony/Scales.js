@@ -1,6 +1,6 @@
 import Scale from "./Scale.js";
 
-let Scales = (function() {
+const Scales = (function() {
     return {
         C_ionian: Scale([ "C", "D", "E", "F", "G", "A", "B" ]),
     }

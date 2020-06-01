@@ -1,7 +1,7 @@
 import App from "../app/App.js";
 
-let UiOutputViewer = function() {
-    let midiOutputNote = $("#midiOutputNote");
+const UiOutputViewer = function() {
+    const midiOutputNote = $("#midiOutputNote");
 
     App.Events.subscribe(App.Events.Session.Song.chordChange, function(e) {
         midiOutputNote.text(e.chord);

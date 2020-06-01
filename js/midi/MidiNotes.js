@@ -1,6 +1,6 @@
 import Notes from "../harmony/Notes.js";
 
-let MidiNotes = (function() {
+const MidiNotes = (function() {
     return {
         keyToString: function(key) {
             let octave = Math.floor(key / 12);

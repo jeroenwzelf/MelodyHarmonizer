@@ -1,7 +1,7 @@
 import App from "../app/App.js";
 import MidiNotes from "../midi/MidiNotes.js";
 
-let UiInputViewer = function() {
+const UiInputViewer = function() {
     let midiInputNote = $("#midiInputNote");
 
     App.Events.subscribe(App.Events.Midi.Devices.Input.noteOnReceived, function(e) {

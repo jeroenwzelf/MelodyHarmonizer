@@ -1,7 +1,7 @@
 import App from "../app/App.js";
 
-let UiSession = function() {
-    let sessionStartStopButton = $("#sessionStartStopButton");
+const UiSession = function() {
+    const sessionStartStopButton = $("#sessionStartStopButton");
 
     sessionStartStopButton.on("click", startButtonClicked);
 

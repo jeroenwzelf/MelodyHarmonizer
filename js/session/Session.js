@@ -4,7 +4,7 @@ import ClickGenerator from "../generator/ClickGenerator.js";
 import SongNavigator from "./song/SongNavigator.js";
 import LastNotePlayedToChordAi from "../app/ai/experiment/LastNotePlayedToChordAi.js";
 
-let Session = (function() {
+const Session = (function() {
     let timer, metronome;
     let AI;
     const songNavigator = SongNavigator();
@@ -49,6 +49,7 @@ let Session = (function() {
 
     function stop() {
         timer.stop();
+        App.Events.Midi.Devices.Output.fireNotesOff();
         App.Events.unsubscribe(App.Events.Session.Timer.tick, tick);
         App.Events.unsubscribe(App.Events.Midi.Devices.Input.noteOnReceived, noteOnReceived);
 

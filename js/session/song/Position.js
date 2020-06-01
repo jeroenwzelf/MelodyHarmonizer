@@ -1,6 +1,6 @@
 import App from "../../app/App.js";
 
-let Position = function(section, measure, beat) {
+const Position = function(section, measure, beat) {
     return (function(section, measure, beat) {
         return {
             section: section,

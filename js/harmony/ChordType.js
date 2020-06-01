@@ -7,8 +7,8 @@ const ChordType = {
     augmented: "+",
 
     inferChordType: function(notes) {
-        let interval1 = Notes.interval(notes[0], notes[1]);
-        let interval2 = Notes.interval(notes[1], notes[2]);
+        const interval1 = Notes.interval(notes[0], notes[1]);
+        const interval2 = Notes.interval(notes[1], notes[2]);
 
         if (interval1 === 3) {
             if (interval2 === 3) return this.diminished;

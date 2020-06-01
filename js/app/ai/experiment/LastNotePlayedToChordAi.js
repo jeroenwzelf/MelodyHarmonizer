@@ -9,7 +9,7 @@ let LastNotePlayedToChordAi = function(songNavigator) {
         App.Events.subscribe(App.Events.Session.Timer.tick, function() {
             let beat = songNavigator.song.getBeat(songNavigator.current()).previous();
             if (beat == null)
-                return;
+                return Scales.C_ionian.chords.triad(0);
 
             for (let note of beat.notes)
                 if (note != null) lastKeyPlayed = note;

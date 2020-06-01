@@ -1,7 +1,7 @@
 import App from "../app/App.js";
 import MidiMessage from "./MidiMessage.js";
 
-let MidiInput = function(device) {
+const MidiInput = function(device) {
 	return (function(device) {
 		let channel = 0;
 

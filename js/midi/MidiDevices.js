@@ -2,7 +2,7 @@ import App from "../app/App.js";
 import MidiInput from "./MidiInput.js";
 import MidiOutput from "./MidiOutput.js";
 
-let MidiDevices = function(midi) {
+const MidiDevices = function(midi) {
 	return (function(midi) {
 		let inputs = [], outputs = [], input = null, output = null;
 

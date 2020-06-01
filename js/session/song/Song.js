@@ -1,6 +1,6 @@
 import Section from "./Section.js";
 
-let Song = function() {
+const Song = function() {
     return (function() {
         return {
             sections: [],

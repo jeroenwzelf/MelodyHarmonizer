@@ -1,6 +1,6 @@
 import MidiDevices from "./MidiDevices.js";
 
-let MidiContext = (function() {
+const MidiContext = (function() {
 	let context = null, devices = null;
 
 	function onMidiSuccess(midi) {

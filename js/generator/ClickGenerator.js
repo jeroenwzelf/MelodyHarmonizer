@@ -1,7 +1,7 @@
 let ClickGenerator = function() {
-    let context = new (window.AudioContext || window.webkitAudioContext)();
-    let oscillator = context.createOscillator();
-    let volume = context.createGain();
+    const context = new (window.AudioContext || window.webkitAudioContext)();
+    const oscillator = context.createOscillator();
+    const volume = context.createGain();
 
     oscillator.type = 'sine';
     volume.gain.value = 0;

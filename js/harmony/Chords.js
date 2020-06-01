@@ -1,6 +1,6 @@
 import Chord from "./Chord.js";
 
-let Chords = function(scale) {
+const Chords = function(scale) {
     return (function(scale) {
         return {
             triad: function(step) {

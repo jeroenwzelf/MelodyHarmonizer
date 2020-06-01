@@ -1,7 +1,7 @@
 let SongConstants = (function() {
-    let notesInBeat = 4;
-    let beatsInMeasure = 4;
-    let measuresInSection = 4;
+    const notesInBeat = 4;
+    const beatsInMeasure = 4;
+    const measuresInSection = 4;
 
     return {
         notesInBeat: notesInBeat,
