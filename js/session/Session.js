@@ -5,40 +5,41 @@ import SongNavigator from "./song/SongNavigator.js";
 import LastNotePlayedToChordAi from "../app/ai/experiment/LastNotePlayedToChordAi.js";
 
 const Session = (function() {
+    const AI = LastNotePlayedToChordAi;
     let timer, metronome;
-    let AI;
-    const songNavigator = SongNavigator();
 
     const bpm = 95;
     const beatLengthMillis = 60000 / bpm;
 
     function start() {
-        metronome = ClickGenerator();
         App.Events.subscribe(App.Events.Session.Timer.tick, tick);
+        metronome = ClickGenerator();
+
+        SongNavigator.init();
+        AI.init();
 
         timer.start(bpm);
         App.Events.subscribe(App.Events.Midi.Devices.Input.noteOnReceived, noteOnReceived);
-        AI = LastNotePlayedToChordAi(songNavigator);
     }
 
     function noteOnReceived(e) {
-        let beat = songNavigator.song.getBeat(songNavigator.current());
+        let beat = SongNavigator.song.getBeat(SongNavigator.current());
 
         let noteTimeInBeat = e.midiMessage.timestamp - beat.timestamp;
         let percentageNoteLocation = noteTimeInBeat / beatLengthMillis;
 
-        beat.notes[Math.round(percentageNoteLocation * 4)] = e.midiMessage.key;
+        beat.notes[Math.round(percentageNoteLocation * (App.Constants.Session.Song.notesInBeat - 1))] = e.midiMessage.key;
     }
 
     function tick(event) {
-        const position = songNavigator.next();
-        songNavigator.song.timestamp(position, event.timestamp);
+        const position = SongNavigator.next();
+        SongNavigator.song.timestamp(position, event.timestamp);
 
         if (position.beat === 0) {
             metronome.clickHard();
             App.Events.Midi.Devices.Output.fireNotesOff();
 
-            let chord = songNavigator.song.getMeasure(position).chord;
+            let chord = SongNavigator.song.getMeasure(position).chord;
             if (chord != null) {
                 chord.play();
                 App.Events.Session.Song.fireChordChange(chord);
@@ -48,12 +49,15 @@ const Session = (function() {
     }
 
     function stop() {
-        timer.stop();
         App.Events.Midi.Devices.Output.fireNotesOff();
-        App.Events.unsubscribe(App.Events.Session.Timer.tick, tick);
         App.Events.unsubscribe(App.Events.Midi.Devices.Input.noteOnReceived, noteOnReceived);
+        timer.stop();
 
-        console.log(songNavigator.song);
+        AI.destroy();
+
+        App.Events.unsubscribe(App.Events.Session.Timer.tick, tick);
+
+        console.log(SongNavigator.song);
     }
 
     return {

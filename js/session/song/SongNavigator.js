@@ -1,24 +1,28 @@
 import Song from "./Song.js";
 import Position from "./Position.js";
 
-const SongNavigator = function() {
-    return (function() {
-        let position = Position(-1, -1, -1);
+const SongNavigator = (function() {
+    let position = null;
 
-        return {
-            song: Song(),
+    function init() {
+        this.song = Song();
+        position = Position(-1, -1, -1);
+    }
 
-            current: function() { return position; },
-            next: function() {
-                position = position.next();
+    return {
+        init: init,
+        song: null,
 
-                if (position.section >= this.song.sections.length - 1)
-                    this.song.addSection();
+        current: function() { return position; },
+        next: function() {
+            position = position.next();
 
-                return position;
-            },
-        }
-    })();
-};
+            if (position.section >= this.song.sections.length - 1)
+                this.song.addSection();
+
+            return position;
+        },
+    }
+})();
 
 export default SongNavigator;
