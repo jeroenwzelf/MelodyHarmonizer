@@ -2,10 +2,10 @@ import App from "../app/App.js";
 import TimerWorker from "./timer/TimerWorker.js";
 import ClickGenerator from "../generator/ClickGenerator.js";
 import SongNavigator from "./song/SongNavigator.js";
-import LastNotePlayedToChordAi from "../app/ai/experiment/LastNotePlayedToChordAi.js";
+import GeneticAi from "../app/ai/GeneticAi.js";
 
 const Session = (function() {
-    const AI = LastNotePlayedToChordAi;
+    const AI = GeneticAi;
     let timer, metronome;
 
     const bpm = 95;
