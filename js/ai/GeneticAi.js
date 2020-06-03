@@ -7,7 +7,14 @@ const GeneticAi = (function() {
 
     function init() {
         ga = GA();
+        ga.evolve();
         App.Events.subscribe(App.Events.Session.Timer.tick, tick);
+        App.Events.subscribe(App.Events.GA.evolveFinished, function(e) {
+            console.log("ga finished:");
+            console.log(e.population);
+            console.log(e.generation);
+            console.log(e.stats);
+        });
     }
 
     function destroy() {
@@ -20,7 +27,7 @@ const GeneticAi = (function() {
         switch (position.beat) {
             // last beat, generate next section
             case App.Constants.Session.Song.beatsInMeasure - 1:
-                let bestIndividual = ga.evolve();
+                // let bestIndividual = ga.evolve();
                 // song.section_next.progression = bestIndividual
                 break;
             // first beat, evaluate previous section
