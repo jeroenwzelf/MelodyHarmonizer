@@ -2,7 +2,7 @@ import App from "../app/App.js";
 import TimerWorker from "./timer/TimerWorker.js";
 import ClickGenerator from "../generator/ClickGenerator.js";
 import SongNavigator from "./song/SongNavigator.js";
-import GeneticAi from "../app/ai/GeneticAi.js";
+import GeneticAi from "../ai/GeneticAi.js";
 
 const Session = (function() {
     const AI = GeneticAi;

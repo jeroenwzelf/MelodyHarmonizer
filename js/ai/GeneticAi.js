@@ -1,6 +1,6 @@
-import App from "../App.js";
+import App from "../app/App.js";
 import GA from "../ga/GA.js";
-import SongNavigator from "../../session/song/SongNavigator.js";
+import SongNavigator from "../session/song/SongNavigator.js";
 
 const GeneticAi = (function() {
     let ga;

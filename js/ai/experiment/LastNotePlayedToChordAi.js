@@ -1,7 +1,7 @@
-import App from "../../App.js";
-import MidiNotes from "../../../midi/MidiNotes.js";
-import KeyEvaluator from "../../evaluators/harmony/KeyEvaluator.js";
-import SongNavigator from "../../../session/song/SongNavigator.js";
+import App from "../../app/App.js";
+import MidiNotes from "../../midi/MidiNotes.js";
+import KeyEvaluator from "../../app/evaluators/harmony/KeyEvaluator.js";
+import SongNavigator from "../../session/song/SongNavigator.js";
 
 let LastNotePlayedToChordAi = (function() {
     let lastKeyPlayed = null;
