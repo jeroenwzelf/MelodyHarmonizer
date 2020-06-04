@@ -5,7 +5,7 @@ import ConstantFitnessEvaluator from "../../evaluators/fitness/ConstantFitnessEv
 const GaConstants = (function() {
     return {
         configuration: {
-            "size": 250,
+            "size": 2,
             "crossover": 0.9,
             "mutation": 0.2,
             "iterations": 2,

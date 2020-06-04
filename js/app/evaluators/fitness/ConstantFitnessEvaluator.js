@@ -1,4 +1,6 @@
-const ConstantFitnessEvaluator = function(individual) {
+const ConstantFitnessEvaluator = function(song, sectionId, individual) {
+    const section = song.sections[sectionId];
+
     return 0.1;
 };
 

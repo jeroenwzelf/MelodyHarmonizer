@@ -1,5 +1,6 @@
 import Genetic from "../../lib/genetic-0.1.14.js"
 import App from "../app/App.js";
+import SongNavigator from "../session/song/SongNavigator.js";
 
 // individual == chord progression (size of beats in measure, list of Chord objects)
 
@@ -12,6 +13,11 @@ const GA = function() {
 
     // creates and returns a random individual
     GA.seed = function() {
+        let individual = this.userData["Individual"];
+
+        if (individual != null)
+            return individual;
+
         return { simple: "simple", object: "object" + Math.random() * 1000 };
         // * generate random chord progression
         // * pick standard chord progression
@@ -43,21 +49,27 @@ const GA = function() {
     // gets notification from GA web workers
     GA.notification = function(population, generation, stats, isFinished) {
         if (isFinished)
-            App.Events.GA.fireEvolveFinished(population, generation, stats);
+            App.Events.GA.fireEvolveFinished(population, generation, stats, this.userData["Section"]);
     };
 
     // returns the fitness score for an individual
     GA.fitness = function(individual) {
         let fitness = 0;
+        const section = this.userData["Section"];
+        const song = this.userData["Song"];
+
         for (let evaluator of this.userData["Evaluators"])
-            fitness += evaluator.factor * evaluator.function(this.userData["Context"], individual);
+            fitness += evaluator.factor * evaluator.function(song, section, individual);
 
         return fitness;
     };
 
     return {
-        evolve: () => GA.evolve(App.Constants.GA.configuration, {
-            Evaluators: App.Constants.GA.Evaluators
+        evolve: (section, individual) => GA.evolve(App.Constants.GA.configuration, {
+            Section: section,
+            Individual: individual,
+            Song: SongNavigator.song,
+            Evaluators: App.Constants.GA.Evaluators,
         }),
         mutate: GA.mutate,
         fitness: GA.fitness,
