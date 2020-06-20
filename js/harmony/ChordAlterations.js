@@ -23,7 +23,7 @@ const ChordAlterations = {
     s11: ChordAlteration("#11", (intervals) => sharpen(intervals, 17)),
 
     b13: ChordAlteration("b13", (intervals) => flatten(intervals, 21)),
-    s13: ChordAlteration("#13", (intervals) => sharpen(intervals, 17)),
+    s13: ChordAlteration("#13", (intervals) => sharpen(intervals, 21)),
 };
 
 export default ChordAlterations;
