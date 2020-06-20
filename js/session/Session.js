@@ -8,9 +8,6 @@ const Session = (function() {
     const AI = GeneticAi;
     let timer, metronome;
 
-    const bpm = 95;
-    const beatLengthMillis = 60000 / bpm;
-
     function start() {
         App.Events.subscribe(App.Events.Session.Timer.tick, tick);
         metronome = ClickGenerator();
@@ -18,7 +15,7 @@ const Session = (function() {
         SongNavigator.init();
         AI.init();
 
-        timer.start(bpm);
+        timer.start(App.Constants.Session.Song.bpm);
         App.Events.subscribe(App.Events.Midi.Devices.Input.noteOnReceived, noteOnReceived);
     }
 
@@ -26,7 +23,7 @@ const Session = (function() {
         let beat = SongNavigator.song.getBeat(SongNavigator.current());
 
         let noteTimeInBeat = e.midiMessage.timestamp - beat.timestamp;
-        let percentageNoteLocation = noteTimeInBeat / beatLengthMillis;
+        let percentageNoteLocation = noteTimeInBeat / App.Constants.Session.Song.beatLengthMillis;
 
         beat.notes[Math.round(percentageNoteLocation * (App.Constants.Session.Song.notesInBeat - 1))] = e.midiMessage.key;
     }

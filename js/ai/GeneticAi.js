@@ -29,26 +29,28 @@ const GeneticAi = (function() {
     }
 
     function tick() {
+        let individual = null;
         let position = SongNavigator.current();
+
         if (position.beat !== 0)
             return;
 
         switch (position.measure) {
-            // last beat, generate next section
             case -1:
             case App.Constants.Session.Song.measuresInSection - 1:
-                ga.evolve(position.section);
+                position = position.next();     // last beat, generate next section
                 break;
-            // first beat, evaluate previous section
             case 0:
-                position = position.previous();
-            // other beat, evaluate current section
+                position = position.previous(); // first beat, evaluate previous section
             default:
-                if (position == null)
+                if (position == null)           // other beat, evaluate current section
                     return;
 
-                ga.evolve(position.section, { individual: "some progression" });
+                // pick individual based on position
+                individual = { individual: "some progression" }
         }
+
+        ga.evolve(position.section, individual);
     }
 
     return {
