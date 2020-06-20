@@ -69,15 +69,16 @@ const Chord = {
         const extension = inferExtensionType(intervals);
         const alterations = inferAlterations(intervals);
 
-        return Chord.create(root, type, extension, alterations);
+        return Chord.create(root, type, extension, alterations, 0);
     },
 
-    create: function(root, type, extension, alterations) {
+    create: function(root, type, extension, alterations, inversion) {
         return {
             root: root,
             type: type,
             extension: extension,
             alterations: alterations,
+            inversion: inversion ? inversion : 0,
 
             intervals: function() {
                 let intervals = [0];
@@ -97,9 +98,10 @@ const Chord = {
 
             notes: function() {
                 let notes = [];
+                let intervals = this.intervals();
 
-                for (const interval of this.intervals())
-                    notes.push(Notes.atInterval(root, interval));
+                for (let i=0; i<intervals.length; ++i)
+                    notes.push(Notes.atInterval(this.root, intervals[(i + this.inversion) % intervals.length]));
 
                 return notes;
             },
