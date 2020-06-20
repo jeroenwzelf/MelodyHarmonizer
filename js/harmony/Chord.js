@@ -106,9 +106,17 @@ const Chord = {
 
             play: function() { App.Events.Midi.Devices.Output.fireNotesOn(MidiNotes.stringsToKey(this.notes(), 4)) },
 
-            extensionToString: () => (this.extension != null) ? this.extension.name : "",
-            alterationsToString: () => (this.alterations != null) ? "(" + String.prototype.concat(this.alterations.map(a => a.name)) + ")" : "",
-            toString: function() { return this.root + this.type.name + this.extensionToString() + this.alterationsToString() },
+            toString: function() {
+                const extensionName = (this.extension != null) ? this.extension.name : "";
+                let alterationNames = "";
+                if (this.alterations != null && this.alterations.length !== 0) {
+                    alterationNames += '(';
+                    for (const alteration of this.alterations) alterationNames += alteration.name;
+                    alterationNames += ')';
+                }
+
+                return this.root + this.type.name + extensionName + alterationNames;
+            },
         };
     },
 };
