@@ -82,14 +82,14 @@ const Chord = {
             intervals: function() {
                 let intervals = [0];
 
-                for (const interval of type.intervals)
+                for (const interval of this.type.intervals)
                     intervals.push(interval);
 
-                if (extension != null)
-                    for (const interval of extension.intervals)
+                if (this.extension != null)
+                    for (const interval of this.extension.intervals)
                         intervals.push(interval);
 
-                for (const alteration of alterations)
+                for (const alteration of this.alterations)
                     alteration.alter(intervals);
 
                 return intervals;
