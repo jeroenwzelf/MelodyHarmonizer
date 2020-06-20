@@ -7,7 +7,10 @@ const Notes = (function() {
             let interval = notes.indexOf(b) - notes.indexOf(a);
             if (interval < 0) interval += notes.length;
             return interval;
-        }
+        },
+        atInterval: function(note, interval) {
+            return notes[(notes.indexOf(note) + interval) % notes.length];
+        },
     };
 })();
 

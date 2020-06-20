@@ -4,9 +4,9 @@ const Chords = function(scale) {
     return (function(scale) {
         return {
             triad: function(step) {
-                return Chord(scale.note(step), [ scale.note(step),
-                        scale.noteAtInterval(step, 2),
-                        scale.noteAtInterval(step, 4)]);
+                return Chord.fromNotes([ scale.note(step),
+                    scale.noteAtInterval(step, 2),
+                    scale.noteAtInterval(step, 4)]);
             },
         };
     })(scale);

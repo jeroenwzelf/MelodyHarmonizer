@@ -14,16 +14,20 @@ const MidiNotes = (function() {
 
             return strings;
         },
-        stringToKey: function(note) {
+        stringToKey: function(note, octave) {
             let key = Notes.notes.indexOf(note);
-            let octave = 4;
 
             return key + (Notes.notes.length * octave);
         },
-        stringsToKey: function(notes) {
+        stringsToKey: function(notes, octave) {
             let keys = [];
-            for (let note of notes)
-                keys.push(this.stringToKey(note));
+            for (let note of notes) {
+                let key = this.stringToKey(note, octave);
+                if (key < keys[keys.length - 1])
+                    key = this.stringToKey(note, ++octave);
+
+                keys.push(key);
+            }
 
             return keys;
         },
