@@ -17,9 +17,8 @@ const ScaleTriad = function(step, type, extension, alterations, inversion) {
             if (this.type != null)
                 return Chord.create(scale.note(this.step), this.type, this.extension, this.alterations, this.inversion);
 
-            let chord = Chord.fromNotes([scale.note(this.step),
-                scale.noteAtInterval(this.step, 2),
-                scale.noteAtInterval(this.step, 4)]);
+
+            let chord = scale.chords.triad(this.step);
             chord.extension = this.extension;
             chord.alterations = this.alterations;
             chord.inversion = this.inversion;

@@ -7,10 +7,11 @@ import ChordProgressions from "../app/constants/ga/ChordProgressions.js";
 import GaConfiguration from "../app/constants/ga/GaConfiguration.js";
 import ChordAlterations from "../harmony/ChordAlterations.js";
 import ChordExtensions from "../harmony/ChordExtensions.js";
+import SongConstants from "../app/constants/session/SongConstants.js";
 
 const Optimize = {
-    "Maximize": function (a, b) { return a >= b; }
-    , "Minimize": function (a, b) { return a < b; }
+    "Maximize": (a, b) => a >= b,
+    "Minimize": (a, b) => a < b,
 };
 
 const Select1 = {
@@ -65,6 +66,9 @@ const mutateFunctions = [
     // change previous chord to half step up/down of picked chord
 ];
 
+const secondHalfOfProgression = (progression) => progression.slice(Math.floor(progression.length));
+const firstHalfOfProgression = (progression) => progression.slice(0, Math.ceil(progression.length));
+
 const GeneticAlgorithmFunctions = {
     // creates and returns a population of chord progressions
     seed: function() {
@@ -90,6 +94,10 @@ const GeneticAlgorithmFunctions = {
         const individual = [];
 
         // * generate random chord progression
+        for (let i=0; i<SongConstants.measuresInSection; ++i)
+            individual.push(KeyEvaluator.current.chords.randomTriad());
+
+        console.log("generated random chord progression:", individual);
 
         return individual;
     },
@@ -107,14 +115,15 @@ const GeneticAlgorithmFunctions = {
 
     // returns two individuals based off of mother and father ([son, daughter])
     crossover: function(mother, father) {
-        // * first half of mother, second half of father
-        // * first half of father, second half of mother
-        return [ mother, father ];
+        const M1 = firstHalfOfProgression(mother); const M2 = secondHalfOfProgression(mother);
+        const F1 = firstHalfOfProgression(father); const F2 = secondHalfOfProgression(father);
+
+        return [ [...M1, ...F2], [...F1, ...M2] ];
     },
 
     generation: function(population, generation, stats) {
         // algorithm stops when an individual has reached the fitness threshold
-        //return (population.find(individual => individual.fitness > GaConfiguration.fitnessThreshold) !== -1);
+        return (population.find(individual => individual.fitness > GaConfiguration.fitnessThreshold));
     },
 
     // gets notification from GA web workers

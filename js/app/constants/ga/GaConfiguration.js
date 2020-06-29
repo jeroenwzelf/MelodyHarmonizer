@@ -1,5 +1,5 @@
 const GaConfiguration = {
-    size: 10,
+    size: 11,
     crossover: 0.9,
     mutation: 0.2,
     iterations: 10,
