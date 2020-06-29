@@ -1,4 +1,4 @@
-import App from "../app/App.js";
+import Events from "../app/events/Events.js";
 import MidiContext from "../midi/MidiContext.js";
 
 const UiMidiDevices = function() {
@@ -21,30 +21,30 @@ const UiMidiDevices = function() {
 		return element;
 	}
 
-	App.Events.subscribe(App.Events.Midi.Devices.inputDevicesChanged, function(e) {
+	Events.subscribe(Events.Midi.Devices.inputDevicesChanged, function(e) {
 		midiInputDevicesContainer.text("");
 		for (let [, device] of e.devices) {
 			let element = addMidiDevice(device, midiInputDevicesContainer);
-			element.on("click", () => App.Events.UI.MidiDevices.fireInputDeviceSelected(device, element));
+			element.on("click", () => Events.UI.MidiDevices.fireInputDeviceSelected(device, element));
 		}
 	});
 
-	App.Events.subscribe(App.Events.Midi.Devices.outputDevicesChanged, function(e) {
+	Events.subscribe(Events.Midi.Devices.outputDevicesChanged, function(e) {
 		midiOutputDevicesContainer.text("");
 		for (let [, device] of e.devices) {
 			let element = addMidiDevice(device, midiOutputDevicesContainer);
-			element.on("click", () => App.Events.UI.MidiDevices.fireOutputDeviceSelected(device, element));
+			element.on("click", () => Events.UI.MidiDevices.fireOutputDeviceSelected(device, element));
 		}
 	});
 
-	App.Events.subscribe(App.Events.UI.MidiDevices.inputDeviceSelected, function(e) {
+	Events.subscribe(Events.UI.MidiDevices.inputDeviceSelected, function(e) {
 		midiInputDevicesContainer.find(".mididevice").removeClass("selected");
 		e.element.addClass("selected");
 
 		midiInputDeviceSelected.text(e.device.name);
 	});
 
-	App.Events.subscribe(App.Events.UI.MidiDevices.outputDeviceSelected, function(e) {
+	Events.subscribe(Events.UI.MidiDevices.outputDeviceSelected, function(e) {
 		midiOutputDevicesContainer.find(".mididevice").removeClass("selected");
 		e.element.addClass("selected");
 

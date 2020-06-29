@@ -24,8 +24,8 @@ let ClickGenerator = function() {
     }
 
     return {
-        clickHard: function() { click(2000); },
-        clickSoft: function() { click(1000); },
+        clickHard: () => click(2000),
+        clickSoft: () => click(1000),
     };
 };
 

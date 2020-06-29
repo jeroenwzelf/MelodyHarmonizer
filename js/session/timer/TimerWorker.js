@@ -1,4 +1,4 @@
-import App from "../../app/App.js";
+import Events from "../../app/events/Events.js";
 import TimerWorkerMessage from "./TimerWorkerMessage.js";
 
 const TimerWorker = function() {
@@ -6,20 +6,15 @@ const TimerWorker = function() {
 
     Instance.onmessage = function(e) {
         switch(e.data.message) {
-            case TimerWorkerMessage.tick: App.Events.Session.Timer.fireTick(e.data.args.timestamp); return;
+            case TimerWorkerMessage.tick: Events.Session.Timer.fireTick(e.data.args.timestamp); return;
             default:
                 console.log("unsupported message: " + e.data.message);
         }
     };
 
     return {
-        start: function(bpm) {
-            Instance.postMessage(TimerWorkerMessage.startMessage(bpm));
-        },
-
-        stop: function() {
-            Instance.postMessage(TimerWorkerMessage.stopMessage());
-        },
+        start: bpm => Instance.postMessage(TimerWorkerMessage.startMessage(bpm)),
+        stop: () => Instance.postMessage(TimerWorkerMessage.stopMessage()),
     };
 };
 

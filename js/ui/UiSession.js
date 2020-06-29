@@ -1,4 +1,4 @@
-import App from "../app/App.js";
+import Events from "../app/events/Events.js";
 
 const UiSession = function() {
     const sessionStartStopButton = $("#sessionStartStopButton");
@@ -9,14 +9,14 @@ const UiSession = function() {
         sessionStartStopButton.text("Stop!");
         sessionStartStopButton.off("click", startButtonClicked);
         sessionStartStopButton.on("click", stopButtonClicked);
-        App.Events.UI.Session.fireStartButtonClicked();
+        Events.UI.Session.fireStartButtonClicked();
     }
 
     function stopButtonClicked() {
         sessionStartStopButton.text("Start!");
         sessionStartStopButton.off("click", stopButtonClicked);
         sessionStartStopButton.on("click", startButtonClicked);
-        App.Events.UI.Session.fireStopButtonClicked();
+        Events.UI.Session.fireStopButtonClicked();
     }
 };
 
