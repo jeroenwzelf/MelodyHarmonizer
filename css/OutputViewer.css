@@ -1,0 +1,24 @@
+#midiOutputViewerContainer {
+    display: flex;
+}
+
+#midiOutputViewerContainer > * {
+    margin: 0 5px;
+}
+
+#outputChord {
+    display: flex;
+    flex-direction: row;
+}
+
+#outputChord_root {
+    font-size: 120% !important;
+}
+
+#outputChord_extension {
+    font-size: 80% !important;
+}
+
+#outputChord_alterations {
+    font-size: 70% !important;
+}

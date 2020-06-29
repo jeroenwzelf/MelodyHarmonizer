@@ -1,0 +1,23 @@
+#sessionControlContainer {
+    padding: 20px;
+    display: flex;
+    width: 28em;
+
+    flex-direction: column;
+}
+
+#sessionInputContainer {
+    padding: 5px;
+    display: flex;
+}
+
+#sessionInfoContainer {
+    padding: 5px;
+    display: flex;
+
+    flex-direction: column;
+}
+
+#sessionInfoContainer > * {
+    padding: 10px;
+}

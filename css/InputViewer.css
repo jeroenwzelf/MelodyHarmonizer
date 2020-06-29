@@ -1,0 +1,7 @@
+#midiInputViewerContainer {
+    display: flex;
+}
+
+#midiInputViewerContainer > * {
+    margin: 0 5px;
+}

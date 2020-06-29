@@ -2,24 +2,6 @@ body * {
     font-size: 110% !important;
 }
 
-#sessionControlContainer {
-    padding: 20px;
-    display: flex;
-    width: 28em;
-
-    flex-direction: column;
-}
-
-#sessionInputContainer {
-    padding: 5px;
-    display: flex;
-}
-
-.midiContainer {
-    display: flex !important;
-    align-items: center;
-}
-
 #page {
     display: none;
     flex-direction: column;
@@ -31,126 +13,8 @@ body * {
     padding: 10px;
 }
 
-.chooseMidiDeviceButton {
-    padding: 10px;
-    width: 10em;
-}
-
-.midiDevicesContainer {
-    background: #fff;
-    border-radius: 2px;
-
-    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
-}
-
-#midiDevicesContainer:hover {
-    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
-}
-
-.mididevice {
-    cursor: pointer;
-}
-
-.mididevice:hover {
-    background: #ececff;
-}
-
-.mididevice.selected {
-    background: #eee;
-    font-weight: bold;
-}
-
-#sessionInfoContainer {
-    padding: 5px;
-    display: flex;
-
-    flex-direction: column;
-}
-
-#sessionInfoContainer > * {
-    padding: 10px;
-}
-
-#midiInputViewerContainer {
-    display: flex;
-}
-
-#midiInputViewerContainer > * {
-    margin: 0 5px;
-}
-
-#midiOutputViewerContainer {
-    display: flex;
-}
-
-#midiOutputViewerContainer > * {
-    margin: 0 5px;
-}
-
 .shadow {
     border-radius: 5px;
     margin: 10px;
     box-shadow: 0 7px 30px -10px rgba(150,170,180,0.5);
-}
-
-#outputChord {
-    display: flex;
-    flex-direction: row;
-}
-
-#outputChord_root {
-    font-size: 120% !important;
-}
-
-#outputChord_extension {
-    font-size: 80% !important;
-}
-
-#outputChord_alterations {
-    font-size: 70% !important;
-}
-
-#loader {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    z-index: 1;
-    margin: -75px 0 0 -75px;
-    border: 16px solid #f3f3f3;
-    border-radius: 50%;
-    border-top: 16px solid #3498db;
-    width: 120px;
-    height: 120px;
-    -webkit-animation: spin 2s linear infinite;
-    animation: spin 2s linear infinite;
-}
-
-@-webkit-keyframes spin {
-    0% { -webkit-transform: rotate(0deg); }
-    100% { -webkit-transform: rotate(360deg); }
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-/* Add animation to "page content" */
-.animate-bottom {
-    position: relative;
-    -webkit-animation-name: animatebottom;
-    -webkit-animation-duration: 1s;
-    animation-name: animatebottom;
-    animation-duration: 1s
-}
-
-@-webkit-keyframes animatebottom {
-    from { bottom: -100px; opacity: 0 }
-    to { bottom: 0; opacity: 1 }
-}
-
-@keyframes animatebottom {
-    from { bottom: -100px; opacity: 0 }
-    to { bottom: 0; opacity: 1 }
 }
