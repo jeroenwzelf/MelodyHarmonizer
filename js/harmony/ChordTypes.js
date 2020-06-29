@@ -13,7 +13,13 @@ const ChordTypes = {
     sus2: ChordType("sus2", [2, 7]),
     sus4: ChordType("sus4", [5, 7]),
 
-    [Symbol.iterator]: function* () { for (let key in this) if (this.hasOwnProperty(key)) yield this[key]; },
+    [Symbol.iterator]: function* () { for (let key in this) if (this.hasOwnProperty(key) && key !== "random") yield this[key]; },
+    random: function(filter) {
+        let keys = (Object.keys(this)).filter(key => key !== "random");
+        if (filter != null)
+            keys.filter(filter);
+        return this[keys[keys.length * Math.random() << 0]];
+    },
 };
 
 export default ChordTypes;

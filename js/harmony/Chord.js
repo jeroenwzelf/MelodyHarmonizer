@@ -1,9 +1,9 @@
-import App from "../app/App.js";
 import MidiNotes from "../midi/MidiNotes.js";
 import ChordTypes from "./ChordTypes.js";
 import Notes from "./Notes.js";
 import ChordExtensions from "./ChordExtensions.js";
 import ChordAlterations from "./ChordAlterations.js";
+import Events from "../app/events/Events.js";
 
 const intervalsForNotes = function(notes) {
     const intervals = [];
@@ -106,7 +106,7 @@ const Chord = {
                 return notes;
             },
 
-            play: function() { App.Events.Midi.Devices.Output.fireNotesOn(MidiNotes.stringsToKey(this.notes(), 4)) },
+            play: function() { Events.Midi.Devices.Output.fireNotesOn(MidiNotes.stringsToKey(this.notes(), 4)) },
 
             toString: function() {
                 const extensionName = (this.extension != null) ? this.extension.name : "";

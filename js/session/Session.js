@@ -1,68 +1,78 @@
-import App from "../app/App.js";
 import TimerWorker from "./timer/TimerWorker.js";
 import ClickGenerator from "../generator/ClickGenerator.js";
 import SongNavigator from "./song/SongNavigator.js";
 import GeneticAi from "../ai/GeneticAi.js";
+import Position from "./song/Position.js";
+import Events from "../app/events/Events.js";
+import SongConstants from "../app/constants/session/SongConstants.js";
+import Section from "./song/Section.js";
 
 const Session = (function() {
     const AI = GeneticAi;
-    let timer, metronome;
+    let timer, metronome, position, song;
 
     function start() {
-        App.Events.subscribe(App.Events.Session.Timer.tick, tick);
+        Events.subscribe(Events.Session.Timer.tick, tick);
         metronome = ClickGenerator();
 
-        SongNavigator.init();
+        position = new Position(-1, -1, -1);
+        song = new Array(1).fill(Section());
         AI.init();
 
-        timer.start(App.Constants.Session.Song.bpm);
-        App.Events.subscribe(App.Events.Midi.Devices.Input.noteOnReceived, noteOnReceived);
+        timer.start(SongConstants.bpm);
+        Events.subscribe(Events.Midi.Devices.Input.noteOnReceived, noteOnReceived);
     }
 
     function noteOnReceived(e) {
-        let beat = SongNavigator.song.getBeat(SongNavigator.current());
+        const beat = SongNavigator.beat(song, position);
 
-        let noteTimeInBeat = e.midiMessage.timestamp - beat.timestamp;
-        let percentageNoteLocation = noteTimeInBeat / App.Constants.Session.Song.beatLengthMillis;
+        const noteTimeInBeat = e.midiMessage.timestamp - beat.timestamp;
+        const percentageNoteLocation = noteTimeInBeat / SongConstants.beatLengthMillis;
 
-        beat.notes[Math.round(percentageNoteLocation * (App.Constants.Session.Song.notesInBeat - 1))] = e.midiMessage.key;
+        beat.notes[Math.round(percentageNoteLocation * (SongConstants.notesInBeat - 1))] = e.midiMessage.key;
     }
 
     function tick(event) {
-        const position = SongNavigator.next();
-        SongNavigator.song.timestamp(position, event.timestamp);
+        position = position.next();
+        if (position.beat === 0 && position.measure === SongConstants.measuresInSection - 1)
+            song.push(Section());
+
+        const beat = SongNavigator.beat(song, position);
+        beat.timestamp = event.timestamp;
 
         if (position.beat === 0) {
             metronome.clickHard();
-            App.Events.Midi.Devices.Output.fireNotesOff();
+            Events.Midi.Devices.Output.fireNotesOff();
 
-            let chord = SongNavigator.song.getMeasure(position).chord;
-            if (chord != null) {
-                chord.play();
-                App.Events.Session.Song.fireChordChange(chord);
+            const measure = SongNavigator.measure(song, position);
+            if (measure.chord != null) {
+                measure.chord.play();
+                Events.Session.Song.fireChordChange(measure.chord);
             }
         }
         else metronome.clickSoft();
     }
 
     function stop() {
-        App.Events.Midi.Devices.Output.fireNotesOff();
-        App.Events.unsubscribe(App.Events.Midi.Devices.Input.noteOnReceived, noteOnReceived);
+        Events.Midi.Devices.Output.fireNotesOff();
+        Events.unsubscribe(Events.Midi.Devices.Input.noteOnReceived, noteOnReceived);
         timer.stop();
 
         AI.destroy();
 
-        App.Events.unsubscribe(App.Events.Session.Timer.tick, tick);
+        Events.unsubscribe(Events.Session.Timer.tick, tick);
 
-        console.log(SongNavigator.song);
+        console.log(song);
     }
 
     return {
+        position: () => position,
+        song: () => song,
         init: function() {
             timer = TimerWorker();
 
-            App.Events.subscribe(App.Events.UI.Session.startButtonClicked, start);
-            App.Events.subscribe(App.Events.UI.Session.stopButtonClicked, stop);
+            Events.subscribe(Events.UI.Session.startButtonClicked, start);
+            Events.subscribe(Events.UI.Session.stopButtonClicked, stop);
         }
     }
 })();

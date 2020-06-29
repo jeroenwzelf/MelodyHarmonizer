@@ -1,46 +1,22 @@
-import App from "../../app/App.js";
 import Measure from "./Measure.js";
+import SongConstants from "../../app/constants/session/SongConstants.js";
 
-const Section = function(id) {
-    return (function(id) {
-        let measures = [];
-        let next = null, previous = null;
+const Section = function() {
+    return {
+        measures: new Array(SongConstants.measuresInSection).fill(0).map(Measure),
+        progression: function(progression) {
+            if (progression != null) {
+                for (let i=0; i<progression.length; ++i)
+                    this.measures[i].chord = progression[i];
+            }
+            else {
+                progression = [];
+                for (let measure of this.measures) progression.push(measure.chord);
+            }
 
-        for (let i=0; i<App.Constants.Session.Song.measuresInSection; ++i)
-            addMeasure();
-
-        function addMeasure() {
-            let measure = Measure(measures.length, id);
-
-            if (measures.length > 0)
-                measure.setPrevious(measures[measures.length - 1]);
-
-            measures.push(measure);
-        }
-
-        return {
-            id: id,
-            next: function() { return next; },
-            previous: function() { return previous; },
-
-            measures: measures,
-            timestamp: null,
-
-            setNext: function(_next) {
-                next = _next;
-                if (next.previous() == null) next.setPrevious(this);
-
-                measures[measures.length - 1].setNext(next.measures[0]);
-            },
-
-            setPrevious: function(_previous) {
-                previous = _previous;
-                if (previous.next() == null) previous.setNext(this);
-
-                measures[0].setPrevious(previous.measures[previous.measures.length - 1]);
-            },
-        };
-    })(id);
+            return progression;
+        },
+    }
 };
 
 export default Section;

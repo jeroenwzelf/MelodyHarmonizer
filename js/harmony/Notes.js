@@ -3,6 +3,7 @@ const Notes = (function() {
 
     return {
         notes: notes,
+        random: () => notes[notes.length * Math.random() << 0],
         interval: function(a, b) {
             let interval = notes.indexOf(b) - notes.indexOf(a);
             if (interval < 0) interval += notes.length;

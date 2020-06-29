@@ -1,7 +1,7 @@
 import App from "../../app/App.js";
 import MidiNotes from "../../midi/MidiNotes.js";
 import KeyEvaluator from "../../app/evaluators/harmony/KeyEvaluator.js";
-import SongNavigator from "../../session/song/SongNavigator.js";
+import SongBuilder from "../../session/song/SongNavigator.js";
 
 let LastNotePlayedToChordAi = (function() {
     let lastKeyPlayed = null;
@@ -15,7 +15,7 @@ let LastNotePlayedToChordAi = (function() {
     }
 
     function tick() {
-        let beat = SongNavigator.song.getBeat(SongNavigator.current()).previous();
+        let beat = SongBuilder.song.getBeat(SongBuilder.current()).previous();
         if (beat == null)
             return KeyEvaluator.current.chords.triad(0);
 
@@ -27,7 +27,7 @@ let LastNotePlayedToChordAi = (function() {
         let step = KeyEvaluator.current.notes.indexOf(note);
         if (step === -1) step = 0;
 
-        let measure = SongNavigator.song.getMeasure(SongNavigator.current()).next();
+        let measure = SongBuilder.song.getMeasure(SongBuilder.current()).next();
         measure.chord = KeyEvaluator.current.chords.triad(step);
     }
 

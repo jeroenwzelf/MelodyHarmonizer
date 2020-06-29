@@ -1,28 +1,11 @@
-import Song from "./Song.js";
-import Position from "./Position.js";
+const section = (song, position) => song[position.section];
+const measure = (song, position) => section(song, position).measures[position.measure];
+const beat = (song, position) => measure(song, position).beats[position.beat];
 
-const SongNavigator = (function() {
-    let position = null;
-
-    function init() {
-        this.song = Song();
-        position = Position(-1, -1, -1);
-    }
-
-    return {
-        init: init,
-        song: null,
-
-        current: function() { return position; },
-        next: function() {
-            position = position.next();
-
-            if (position.section >= this.song.sections.length - 1)
-                this.song.addSection();
-
-            return position;
-        },
-    }
-})();
+const SongNavigator = {
+    section: section,
+    measure: measure,
+    beat: beat,
+};
 
 export default SongNavigator;

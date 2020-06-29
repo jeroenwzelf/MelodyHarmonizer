@@ -62,34 +62,51 @@ body * {
 }
 
 #sessionInfoContainer {
-    padding: 20px;
+    padding: 5px;
     display: flex;
-    width: 28em;
 
     flex-direction: column;
 }
 
 #sessionInfoContainer > * {
     padding: 10px;
-    flex-basis: 20px;
 }
 
 #midiInputViewerContainer {
     display: flex;
-    flex-direction: row;
-    flex-basis: 20px;
 }
 
 #midiInputViewerContainer > * {
-    flex-basis: 100px;
+    margin: 0 5px;
 }
 
 #midiOutputViewerContainer {
     display: flex;
-    flex-direction: row;
-    flex-basis: 20px;
 }
 
 #midiOutputViewerContainer > * {
-    flex-basis: 20px;
+    margin: 0 5px;
+}
+
+.shadow {
+    border-radius: 5px;
+    margin: 10px;
+    box-shadow: 0 7px 30px -10px rgba(150,170,180,0.5);
+}
+
+#outputChord {
+    display: flex;
+    flex-direction: row;
+}
+
+#outputChord_root {
+    font-size: 120% !important;
+}
+
+#outputChord_extension {
+    font-size: 80% !important;
+}
+
+#outputChord_alterations {
+    font-size: 70% !important;
 }

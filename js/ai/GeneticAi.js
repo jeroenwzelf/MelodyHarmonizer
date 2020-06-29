@@ -1,56 +1,57 @@
-import App from "../app/App.js";
-import GA from "../ga/GA.js";
-import SongNavigator from "../session/song/SongNavigator.js";
+import GeneticAlgorithmWorker from "../ga/GeneticAlgorithmWorker.js";
+import Session from "../session/Session.js";
+import Events from "../app/events/Events.js";
+import SongConstants from "../app/constants/session/SongConstants.js";
+import GaConfiguration from "../app/constants/ga/GaConfiguration.js";
+import Chord from "../harmony/Chord.js";
+import ChordAlterations from "../harmony/ChordAlterations.js";
 
 const GeneticAi = (function() {
     let ga;
 
     function init() {
-        ga = GA();
-        App.Events.subscribe(App.Events.Session.Timer.tick, tick);
-        App.Events.subscribe(App.Events.GA.evolveFinished, gaFinished);
+        ga = GeneticAlgorithmWorker();
+        Events.subscribe(Events.Session.Timer.tick, tick);
+        Events.subscribe(Events.GA.evolveFinished, gaFinished);
+
+        ga.evolve(Session.song(), 0);
     }
 
     function destroy() {
-        App.Events.unsubscribe(App.Events.Session.Timer.tick, tick);
-        App.Events.unsubscribe(App.Events.GA.evolveFinished, gaFinished);
+        Events.unsubscribe(Events.Session.Timer.tick, tick);
+        Events.unsubscribe(Events.GA.evolveFinished, gaFinished);
     }
 
     function gaFinished(e) {
-        /*console.log("ga finished:");
-        console.log(e.population);
-        console.log(e.generation);
-        console.log(e.stats);
-        console.log(e.section);*/
+        let individual;
 
-        console.log("ga finished, changing following section:");
-        console.log(SongNavigator.song.sections[e.section]);
-        // song.section_next.progression = bestIndividual
+        const population = e.population.filter((individual) => individual.fitness > GaConfiguration.fitnessThreshold);
+        if (population.length > 0)
+            individual = population[Math.floor(Math.random() * population.length)];
+        else individual = e.population[0];  // choose the best available below the threshold
+
+        const progression = individual.entity.map(c => Chord.create(c.root, c.type, c.extension, c.alterations.map(a => ChordAlterations.fromName(a.name))));
+        console.log("picked chord progression for section " + e.section, progression);
+        Session.song()[e.section].progression(progression);
     }
 
     function tick() {
-        let individual = null;
-        let position = SongNavigator.current();
+        const position = Session.position();
+        let section = position.section;
 
         if (position.beat !== 0)
             return;
 
         switch (position.measure) {
-            case -1:
-            case App.Constants.Session.Song.measuresInSection - 1:
-                position = position.next();     // last beat, generate next section
+            case SongConstants.measuresInSection - 1:
+                ++section;
                 break;
             case 0:
-                position = position.previous(); // first beat, evaluate previous section
-            default:
-                if (position == null)           // other beat, evaluate current section
+                if (--section < 0)
                     return;
-
-                // pick individual based on position
-                individual = { individual: "some progression" }
         }
 
-        ga.evolve(position.section, individual);
+        ga.evolve(Session.song(), section);
     }
 
     return {
