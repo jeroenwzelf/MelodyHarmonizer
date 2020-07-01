@@ -5,7 +5,9 @@
 	<link rel="shortcut icon" type="image/png" href="/img/favicon.png"/>
 
 	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="css/BranchInfo.css">
 	<link rel="stylesheet" type="text/css" href="css/MidiDevices.css">
+	<link rel="stylesheet" type="text/css" href="css/KeySelector.css">
 	<link rel="stylesheet" type="text/css" href="css/InputViewer.css">
 	<link rel="stylesheet" type="text/css" href="css/OutputViewer.css">
 	<link rel="stylesheet" type="text/css" href="css/Session.css">
@@ -14,8 +16,8 @@
 	<!-- JQuery -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<!-- Font Awesome -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"></script>
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/js/all.min.js"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" rel="stylesheet">
 	<!-- Bootstrap core CSS -->
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
 	<!-- Material Design Bootstrap -->
@@ -30,6 +32,10 @@
 	<div id="page" class="animate-bottom">
 		<nav class="navbar navbar-light bg-primary">
 			<a class="navbar-brand" href="#">MIDI Melody Harmonizer</a>
+			<div id="branch-info-nav-item" class="nav-item">
+				<a class="nav-link" id="branch-info"></a>
+				<i class="fab fa-github"></i>
+			</div>
 		</nav>
 		<div id="sessionControlContainer">
 			<div id="midiInputContainer" class="dropright midiContainer">
@@ -44,14 +50,10 @@
 			</div>
 
 			<button class="btn btn-info btn-lg" id="sessionStartStopButton">Start!</button>
-			<!-- <small>Input a tempo between 50 - 280 bpm: </small> -->
-			<div id="sessionInputContainer">
-				<!-- <input id="sessionBpmInput" placeholder="120"> -->
-			</div>
 
 			<div id="sessionInfoContainer">
 				<div id="midiInputViewerContainer" class="shadow">
-					<div>MIDI Input:</div>
+					<div>input note:</div>
 					<div id="midiInputNote"></div>
 				</div>
 
@@ -65,12 +67,18 @@
 					</div>
 				</div>
 			</div>
+
+			<!-- <small>Input a tempo between 50 - 280 bpm: </small> -->
+			<div id="sessionInputContainer">
+				<!-- <input id="sessionBpmInput" placeholder="120"> -->
+				<p>Key: </p>
+				<input id="KeySelector">
+			</div>
+
 		</div>
 	</div>
 
-	<div id="loader">
-
-	</div>
+	<div id="loader"></div>
 
 	<script type="module">
 		import App from "./js/app/App.js";

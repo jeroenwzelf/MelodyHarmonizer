@@ -8,8 +8,8 @@ const ChordType = function(name, intervals) {
 const ChordTypes = {
     major: ChordType("", [4, 7]),
     minor: ChordType("min", [3, 7]),
-    diminished: ChordType("-", [3, 6]),
-    augmented: ChordType("+", [4, 8]),
+    diminished: ChordType("dim", [3, 6]),
+    augmented: ChordType("aug", [4, 8]),
     sus2: ChordType("sus2", [2, 7]),
     sus4: ChordType("sus4", [5, 7]),
 

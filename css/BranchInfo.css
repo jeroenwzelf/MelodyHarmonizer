@@ -1,0 +1,12 @@
+#branch-info-nav-item {
+    display: flex;
+    flex-direction: row;
+}
+
+#branch-info {
+    color: black;
+}
+
+#branch-info:hover {
+    color: white;
+}

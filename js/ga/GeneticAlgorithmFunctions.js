@@ -66,8 +66,8 @@ const mutateFunctions = [
     // change previous chord to half step up/down of picked chord
 ];
 
-const secondHalfOfProgression = (progression) => progression.slice(Math.floor(progression.length));
 const firstHalfOfProgression = (progression) => progression.slice(0, Math.ceil(progression.length));
+const secondHalfOfProgression = (progression) => progression.slice(Math.floor(progression.length));
 
 const GeneticAlgorithmFunctions = {
     // creates and returns a population of chord progressions
