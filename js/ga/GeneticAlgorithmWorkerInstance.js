@@ -2,6 +2,7 @@ import Configuration from "../app/constants/ga/GaConfiguration.js";
 import GaFunctions from "./GeneticAlgorithmFunctions.js";
 import GeneticAlgorithmWorkerMessage from "./GeneticAlgorithmWorkerMessage.js";
 import Utils from "../object/Utils.js";
+import KeyEvaluator from "../app/evaluators/harmony/KeyEvaluator.js";
 
 const mutateOrNot = (entity) => Math.random() <= Configuration.mutation && GaFunctions.mutate ? GaFunctions.mutate(Utils.Clone(entity)) : entity;
 
@@ -63,6 +64,7 @@ const sendNotification = function(pop, generation, stats, isFinished, section) {
 self.onmessage = e => {
     switch(e.data.message) {
         case GeneticAlgorithmWorkerMessage.evolve: generateProgressionPopulation(Utils.Serialization.parse(e.data.args.song), e.data.args.sectionId); return;
+        case GeneticAlgorithmWorkerMessage.keyChanged: KeyEvaluator.set(e.data.args.root, e.data.args.mode); return;
         default:
             console.log("unsupported message: " + e.data.message);
     }

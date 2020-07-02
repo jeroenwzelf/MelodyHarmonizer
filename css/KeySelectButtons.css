@@ -1,0 +1,4 @@
+#keySelectButtons {
+    display: flex;
+    flex-direction: column;
+}

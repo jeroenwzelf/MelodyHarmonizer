@@ -1,5 +1,5 @@
 import UiInputViewer from "./UiInputViewer.js";
-import UiKeySelector from "./UiKeySelector.js";
+import UiKeySelectButtons from "./UiKeySelectButtons.js";
 import UiMidiDevices from "./UiMidiDevices.js";
 import UiOutputViewer from "./UiOutputViewer.js";
 import UiSession from "./UiSession.js";
@@ -11,7 +11,7 @@ const UI = (function() {
 		init: function() {
 			UiInputViewer();
 			UiBranchInfo();
-			UiKeySelector();
+			UiKeySelectButtons();
 			UiMidiDevices();
 			UiOutputViewer();
 			UiSession();

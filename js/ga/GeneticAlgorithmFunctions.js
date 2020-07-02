@@ -77,7 +77,7 @@ const GeneticAlgorithmFunctions = {
             let progression = [];
 
             for (let chord of entity)
-                progression.push(chord.create(KeyEvaluator.current));
+                progression.push(chord.create(KeyEvaluator.current()));
 
             return progression;
         });
@@ -95,9 +95,7 @@ const GeneticAlgorithmFunctions = {
 
         // * generate random chord progression
         for (let i=0; i<SongConstants.measuresInSection; ++i)
-            individual.push(KeyEvaluator.current.chords.randomTriad());
-
-        console.log("generated random chord progression:", individual);
+            individual.push(KeyEvaluator.current().chords.randomTriad());
 
         return individual;
     },

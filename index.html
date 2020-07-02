@@ -7,7 +7,7 @@
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<link rel="stylesheet" type="text/css" href="css/BranchInfo.css">
 	<link rel="stylesheet" type="text/css" href="css/MidiDevices.css">
-	<link rel="stylesheet" type="text/css" href="css/KeySelector.css">
+	<link rel="stylesheet" type="text/css" href="css/KeySelectButtons.css">
 	<link rel="stylesheet" type="text/css" href="css/InputViewer.css">
 	<link rel="stylesheet" type="text/css" href="css/OutputViewer.css">
 	<link rel="stylesheet" type="text/css" href="css/Session.css">
@@ -38,15 +38,17 @@
 			</div>
 		</nav>
 		<div id="sessionControlContainer">
-			<div id="midiInputContainer" class="dropright midiContainer">
-				<button id="chooseMidiInputButton" class="btn btn-info btn-lg dropdown-toggle chooseMidiDeviceButton" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-music"></i> MIDI In</button>
-				<div id="midiInputDevicesContainer" class="dropdown-menu midiDevicesContainer" aria-labelledby="chooseMidiOutputButton">No MIDI devices.</div>
-				<div id="midiInputDeviceSelected"></div>
-			</div>
-			<div id="midiOutputContainer" class="dropright midiContainer">
-				<button id="chooseMidiOutputButton" class="btn btn-info btn-lg dropdown-toggle chooseMidiDeviceButton" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-music"></i> MIDI out</button>
-				<div id="midiOutputDevicesContainer" class="dropdown-menu midiDevicesContainer" aria-labelledby="chooseMidiOutputButton">No MIDI devices.</div>
-				<div id="midiOutputDeviceSelected"></div>
+			<div id="midiContainer">
+				<div id="midiInputContainer" class="dropright midiContainer">
+					<button id="chooseMidiInputButton" class="btn btn-info btn-lg dropdown-toggle chooseMidiDeviceButton" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-music"></i> MIDI In</button>
+					<div id="midiInputDevicesContainer" class="dropdown-menu midiDevicesContainer" aria-labelledby="chooseMidiOutputButton">No MIDI devices.</div>
+					<div id="midiInputDeviceSelected"></div>
+				</div>
+				<div id="midiOutputContainer" class="dropright midiContainer">
+					<button id="chooseMidiOutputButton" class="btn btn-info btn-lg dropdown-toggle chooseMidiDeviceButton" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-music"></i> MIDI out</button>
+					<div id="midiOutputDevicesContainer" class="dropdown-menu midiDevicesContainer" aria-labelledby="chooseMidiOutputButton">No MIDI devices.</div>
+					<div id="midiOutputDeviceSelected"></div>
+				</div>
 			</div>
 
 			<button class="btn btn-info btn-lg" id="sessionStartStopButton">Start!</button>
@@ -71,8 +73,10 @@
 			<!-- <small>Input a tempo between 50 - 280 bpm: </small> -->
 			<div id="sessionInputContainer">
 				<!-- <input id="sessionBpmInput" placeholder="120"> -->
-				<p>Key: </p>
-				<input id="KeySelector">
+				<div id="keySelectButtons">
+					<div id="keyRootSelectButtons"></div>
+					<div id="keyModeSelectButtons"></div>
+				</div>
 			</div>
 
 		</div>

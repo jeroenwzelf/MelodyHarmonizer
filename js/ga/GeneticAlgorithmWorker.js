@@ -1,9 +1,13 @@
 import Events from "../app/events/Events.js";
 import GeneticAlgorithmWorkerMessage from "./GeneticAlgorithmWorkerMessage.js";
 import Utils from "../object/Utils.js";
+import KeyEvaluator from "../app/evaluators/harmony/KeyEvaluator.js";
 
 const GeneticAlgorithmWorker = function() {
     const Instance = new Worker("js/ga/GeneticAlgorithmWorkerInstance.js", { type: "module" });
+
+    Events.subscribe(Events.Harmony.keyChanged, e => Instance.postMessage(GeneticAlgorithmWorkerMessage.keyChangedMessage(e.root, e.mode)));
+    Instance.postMessage(GeneticAlgorithmWorkerMessage.keyChangedMessage(KeyEvaluator.root, KeyEvaluator.mode));
 
     Instance.onmessage = e => {
         switch(e.data.message) {

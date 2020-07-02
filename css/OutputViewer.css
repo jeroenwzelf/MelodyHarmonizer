@@ -1,5 +1,6 @@
 #midiOutputViewerContainer {
     display: flex;
+    width: 15em;
 }
 
 #midiOutputViewerContainer > * {
@@ -8,7 +9,6 @@
 
 #outputChord {
     display: flex;
-    flex-direction: row;
 }
 
 #outputChord_root {

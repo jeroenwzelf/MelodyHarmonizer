@@ -8,6 +8,12 @@
     width: 10em;
 }
 
+#midiContainer {
+    display: flex;
+
+    flex-direction: ;
+}
+
 .midiDevicesContainer {
     background: #fff;
     border-radius: 2px;

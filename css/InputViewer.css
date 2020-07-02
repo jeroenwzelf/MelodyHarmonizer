@@ -1,5 +1,6 @@
 #midiInputViewerContainer {
     display: flex;
+    width: 15em;
 }
 
 #midiInputViewerContainer > * {
