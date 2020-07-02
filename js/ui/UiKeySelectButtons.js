@@ -20,7 +20,7 @@ const UiKeySelectButtons = function() {
 
     const buttonClicked = button => {
         selectButton(button);
-        Events.Harmony.fireKeyChanged(selectedButton(keyRootSelectButtons).text(), selectedButton(keyModeSelectButtons).text());
+        Events.UI.Session.fireKeyChanged(selectedButton(keyRootSelectButtons).text(), selectedButton(keyModeSelectButtons).text());
     };
 
     for (let note of Notes.notes)
@@ -31,7 +31,7 @@ const UiKeySelectButtons = function() {
         keyModeSelectButtons.append(newButton(mode, function() { buttonClicked($(this)); }));
     selectButton(keyModeSelectButtons.children().first());
 
-    Events.Harmony.fireKeyChanged(selectedButton(keyRootSelectButtons).text(), selectedButton(keyModeSelectButtons).text());
+    Events.UI.Session.fireKeyChanged(selectedButton(keyRootSelectButtons).text(), selectedButton(keyModeSelectButtons).text());
 };
 
 export default UiKeySelectButtons;

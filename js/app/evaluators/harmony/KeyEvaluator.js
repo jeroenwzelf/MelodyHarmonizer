@@ -15,7 +15,7 @@ const KeyEvaluator = (function() {
         },
     };
 
-    if (typeof $ !== 'undefined') Events.subscribe(Events.Harmony.keyChanged, e => evaluator.set(e.root, e.mode));
+    if (typeof $ !== 'undefined') Events.subscribe(Events.UI.Session.keyChanged, e => evaluator.set(e.root, e.mode));
     return evaluator;
 })();
 

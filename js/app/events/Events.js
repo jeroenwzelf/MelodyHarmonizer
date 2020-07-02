@@ -3,13 +3,11 @@ import SessionEvents from "./session/SessionEvents.js";
 import MidiEvents from "./midi/MidiEvents.js";
 import GaEvents from "./ga/GaEvents.js";
 import UiEvents from "./ui/UiEvents.js";
-import HarmonyEvents from "./harmony/HarmonyEvents.js";
 
 let Events = (function() {
     return {
         Window: WindowEvents,
         Session: SessionEvents,
-        Harmony: HarmonyEvents,
         Midi: MidiEvents,
         GA: GaEvents,
         UI: UiEvents,

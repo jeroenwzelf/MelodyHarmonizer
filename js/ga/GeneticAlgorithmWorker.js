@@ -6,7 +6,7 @@ import KeyEvaluator from "../app/evaluators/harmony/KeyEvaluator.js";
 const GeneticAlgorithmWorker = function() {
     const Instance = new Worker("js/ga/GeneticAlgorithmWorkerInstance.js", { type: "module" });
 
-    Events.subscribe(Events.Harmony.keyChanged, e => Instance.postMessage(GeneticAlgorithmWorkerMessage.keyChangedMessage(e.root, e.mode)));
+    Events.subscribe(Events.UI.Session.keyChanged, e => Instance.postMessage(GeneticAlgorithmWorkerMessage.keyChangedMessage(e.root, e.mode)));
     Instance.postMessage(GeneticAlgorithmWorkerMessage.keyChangedMessage(KeyEvaluator.root, KeyEvaluator.mode));
 
     Instance.onmessage = e => {

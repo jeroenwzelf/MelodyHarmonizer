@@ -2,8 +2,10 @@ import Events from "../app/events/Events.js";
 
 const UiSession = function() {
     const sessionStartStopButton = $("#sessionStartStopButton");
+    const enableMetronomeInput = $("#enableMetronomeInput");
 
     sessionStartStopButton.on("click", startButtonClicked);
+    enableMetronomeInput.on("click", () => Events.UI.Session.fireMetronomeToggle());
 
     function startButtonClicked() {
         sessionStartStopButton.text("Stop!");

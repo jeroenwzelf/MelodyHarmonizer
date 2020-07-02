@@ -10,6 +10,9 @@ import Section from "./song/Section.js";
 const Session = (function() {
     const AI = GeneticAi;
     let timer, metronome, position, song;
+    let metronomeSoundEnabled = true;
+
+    Events.subscribe(Events.UI.Session.metronomeToggle, () => metronomeSoundEnabled = !metronomeSoundEnabled);
 
     function start() {
         Events.subscribe(Events.Session.Timer.tick, tick);
@@ -41,7 +44,7 @@ const Session = (function() {
         beat.timestamp = event.timestamp;
 
         if (position.beat === 0) {
-            metronome.clickHard();
+            if (metronomeSoundEnabled) metronome.clickHard();
             Events.Midi.Devices.Output.fireNotesOff();
 
             const measure = SongNavigator.measure(song, position);
@@ -50,7 +53,7 @@ const Session = (function() {
                 Events.Session.Song.fireChordChange(measure.chord);
             }
         }
-        else metronome.clickSoft();
+        else if (metronomeSoundEnabled) metronome.clickSoft();
     }
 
     function stop() {
