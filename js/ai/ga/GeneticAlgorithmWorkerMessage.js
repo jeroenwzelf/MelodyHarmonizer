@@ -1,4 +1,4 @@
-import Utils from "../object/Utils.js";
+import Utils from "../../object/Utils.js";
 
 const GeneticAlgorithmWorkerMessage = (function() {
     function message(message, args) {

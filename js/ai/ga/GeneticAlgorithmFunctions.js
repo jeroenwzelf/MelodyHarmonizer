@@ -1,13 +1,13 @@
-import Configuration from "../app/constants/ga/GaConfiguration.js";
-import KeyEvaluator from "../app/evaluators/harmony/KeyEvaluator.js";
-import ChordTypes from "../harmony/ChordTypes.js";
+import Configuration from "../../app/constants/ga/GaConfiguration.js";
+import KeyEvaluator from "../../app/evaluators/harmony/KeyEvaluator.js";
+import ChordTypes from "../../harmony/ChordTypes.js";
 import GeneticAlgorithmWorkerMessage from "./GeneticAlgorithmWorkerMessage.js";
-import Evaluators from "../app/constants/ga/Evaluators.js";
-import ChordProgressions from "../app/constants/ga/ChordProgressions.js";
-import GaConfiguration from "../app/constants/ga/GaConfiguration.js";
-import ChordAlterations from "../harmony/ChordAlterations.js";
-import ChordExtensions from "../harmony/ChordExtensions.js";
-import SongConstants from "../app/constants/session/SongConstants.js";
+import Evaluators from "../../app/constants/ga/Evaluators.js";
+import ChordProgressions from "../../app/constants/ga/ChordProgressions.js";
+import GaConfiguration from "../../app/constants/ga/GaConfiguration.js";
+import ChordAlterations from "../../harmony/ChordAlterations.js";
+import ChordExtensions from "../../harmony/ChordExtensions.js";
+import SongConstants from "../../app/constants/session/SongConstants.js";
 
 const Optimize = {
     "Maximize": (a, b) => a >= b,

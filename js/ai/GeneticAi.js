@@ -1,4 +1,4 @@
-import GeneticAlgorithmWorker from "../ga/GeneticAlgorithmWorker.js";
+import GeneticAlgorithmWorker from "./ga/GeneticAlgorithmWorker.js";
 import Session from "../session/Session.js";
 import Events from "../app/events/Events.js";
 import SongConstants from "../app/constants/session/SongConstants.js";
