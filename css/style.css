@@ -1,12 +1,17 @@
 body * {
     font-size: 110% !important;
+    color: white;
+}
+
+html {
+    background-color: darkblue;
 }
 
 #page {
     display: none;
     flex-direction: column;
 
-    padding: 10px;
+    background-color: midnightblue;
 }
 
 #page > * {

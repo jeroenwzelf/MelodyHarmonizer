@@ -9,6 +9,7 @@
 
 #outputChord {
     display: flex;
+    height: 1.2em;
 }
 
 #outputChord_root {

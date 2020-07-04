@@ -23,3 +23,7 @@
 #sessionInfoContainer > * {
     padding: 10px;
 }
+
+.viewerContainer {
+    background-color: darkblue;
+}
