@@ -3,6 +3,7 @@ import TimerWorkerMessage from "./TimerWorkerMessage.js";
 
 const TimerWorker = function() {
     const Instance = new Worker("js/session/timer/TimerWorkerInstance.js", { type: "module" });
+    let running = false;
 
     Instance.onmessage = function(e) {
         switch(e.data.message) {
@@ -13,8 +14,18 @@ const TimerWorker = function() {
     };
 
     return {
-        start: bpm => Instance.postMessage(TimerWorkerMessage.startMessage(bpm)),
-        stop: () => Instance.postMessage(TimerWorkerMessage.stopMessage()),
+        start: bpm => {
+            running = true;
+            Instance.postMessage(TimerWorkerMessage.startMessage(bpm));
+        },
+        bpm: bpm => {
+            if (running)
+                Instance.postMessage(TimerWorkerMessage.bpmMessage(bpm))
+        },
+        stop: () => {
+            running = false;
+            Instance.postMessage(TimerWorkerMessage.stopMessage());
+        }
     };
 };
 

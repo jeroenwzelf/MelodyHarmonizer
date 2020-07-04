@@ -1,4 +1,5 @@
 import SongConstants from "../app/constants/session/SongConstants.js";
+import Events from "../app/events/Events.js";
 
 const UiBpm = function() {
     const bpmSlider = $("#bpmSlider");
@@ -6,7 +7,7 @@ const UiBpm = function() {
 
     bpmSlider.on("input", () => bpmValue.text(bpmSlider.val()));
     bpmSlider.on("change", () => {
-        console.log("bpm change: ", bpmSlider.val());
+        Events.UI.Session.fireBpmChanged(bpmSlider.val());
     });
 
     bpmSlider.val(SongConstants.bpm);

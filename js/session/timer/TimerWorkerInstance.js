@@ -1,24 +1,26 @@
 import TimerWorkerMessage from "./TimerWorkerMessage.js";
 
-let intervalId;
+let timeoutHandle;
+let _bpm;
 
 function start(bpm) {
-    intervalId = setInterval(tick(), (60 / bpm) * 1000);
+    _bpm = bpm;
+    run();
 }
 
-function tick() {
+function run() {
+    timeoutHandle = setTimeout(run, (60 / _bpm) * 1000);
     postMessage(TimerWorkerMessage.tickMessage(Date.now()));
-    return tick;
 }
 
 function stop() {
-    clearInterval(intervalId);
-    intervalId = null;
+    clearTimeout(timeoutHandle);
 }
 
 self.onmessage = e => {
     switch(e.data.message) {
         case TimerWorkerMessage.start: start(e.data.args.bpm); return;
+        case TimerWorkerMessage.bpm: _bpm = e.data.args.bpm; return;
         case TimerWorkerMessage.stop: stop(); return;
         default:
             console.log("unsupported message: " + e.data.message);

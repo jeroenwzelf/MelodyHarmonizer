@@ -13,6 +13,7 @@ const Session = (function() {
     let metronomeSoundEnabled = true;
 
     Events.subscribe(Events.UI.Session.metronomeToggle, () => metronomeSoundEnabled = !metronomeSoundEnabled);
+    Events.subscribe(Events.UI.Session.bpmChanged, e => timer.bpm(e.bpm));
 
     function start() {
         Events.subscribe(Events.Session.Timer.tick, tick);
