@@ -5,6 +5,7 @@
 	<link rel="shortcut icon" type="image/png" href="/img/favicon.png"/>
 
 	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="css/BpmContainer.css">
 	<link rel="stylesheet" type="text/css" href="css/BranchInfo.css">
 	<link rel="stylesheet" type="text/css" href="css/MidiDevices.css">
 	<link rel="stylesheet" type="text/css" href="css/KeySelectButtons.css">
@@ -73,11 +74,15 @@
 					<input class="form-check-input" type="checkbox" checked id="enableMetronomeInput">
 					<label class="form-check-label" for="enableMetronomeInput"><i class="fas fa-drum"></i></label>
 				</div>
+
+				<div id="bpmContainer">
+					<input id="bpmSlider" type="range" min="50" max="250" class="slider">
+					<span id="bpmValue"></span>
+					<label class="form-check-label" for="bpmSlider">bpm <i class="fas fa-drum"></i></label>
+				</div>
 			</div>
 
-			<!-- <small>Input a tempo between 50 - 280 bpm: </small> -->
 			<div id="sessionInputContainer">
-				<!-- <input id="sessionBpmInput" placeholder="120"> -->
 				<div id="keySelectButtons">
 					<div id="keyRootSelectButtons"></div>
 					<div id="keyModeSelectButtons"></div>

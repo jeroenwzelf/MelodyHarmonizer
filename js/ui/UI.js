@@ -5,12 +5,14 @@ import UiOutputViewer from "./UiOutputViewer.js";
 import UiSession from "./UiSession.js";
 import UiPageLoader from "./UiPageLoader.js";
 import UiBranchInfo from "./UiBranchInfo.js";
+import UiBpm from "./UiBpm.js";
 
 const UI = (function() {
 	return {
 		init: function() {
-			UiInputViewer();
+			UiBpm();
 			UiBranchInfo();
+			UiInputViewer();
 			UiKeySelectButtons();
 			UiMidiDevices();
 			UiOutputViewer();
