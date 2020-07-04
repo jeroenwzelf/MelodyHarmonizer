@@ -1,25 +1,30 @@
 body * {
     font-size: 110% !important;
-    color: white;
 }
 
 html {
-    background-color: darkblue;
-}
-
-#page {
-    display: none;
-    flex-direction: column;
-
     background-color: midnightblue;
 }
 
-#page > * {
-    padding: 10px;
+#page * {
+    color: white;
 }
 
 .shadow {
     border-radius: 5px;
     margin: 10px;
     box-shadow: 0 7px 30px -10px rgba(150,170,180,0.5);
+}
+
+#page {
+    display: none;
+    flex-direction: column;
+    height: 100vh;
+
+    background-color: midnightblue;
+}
+
+#footer {
+    position: absolute;
+    bottom: 0;
 }
