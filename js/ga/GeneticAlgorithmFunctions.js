@@ -8,6 +8,7 @@ import GaConfiguration from "../app/constants/ga/GaConfiguration.js";
 import ChordAlterations from "../harmony/ChordAlterations.js";
 import ChordExtensions from "../harmony/ChordExtensions.js";
 import SongConstants from "../app/constants/session/SongConstants.js";
+import Utils from "../object/Utils.js";
 
 const Optimize = {
     "Maximize": (a, b) => a >= b,
@@ -58,20 +59,28 @@ const Select2 = {
 };
 
 const mutateFunctions = [
-    chord => chord.type = ChordTypes.random(type => type !== chord.type),
-    chord => chord.extension = ChordExtensions.random(extension => extension !== chord.extension),
-    chord => chord.alterations.push(ChordAlterations.random(alteration => !chord.alterations.find(a => a !== alteration))),
-    chord => chord.inversion = Math.floor(Math.random() * chord.length),
-    // pick another key triad
-    // change previous chord to half step up/down of picked chord
+    chord => { chord.type = ChordTypes.random(type => type !== chord.type); return chord; },
+    chord => { chord.extension = ChordExtensions.random(extension => extension !== chord.extension); return chord; },
+    chord => { chord.alterations.push(ChordAlterations.random(alteration => !chord.alterations.find(a => a !== alteration))); return chord; },
+    chord => { chord.inversion = Math.floor(Math.random() * chord.length); return chord; },
+    chord => KeyEvaluator.current().chords.randomTriad(),
 ];
 
-const firstHalfOfProgression = (progression) => progression.slice(0, Math.ceil(progression.length));
-const secondHalfOfProgression = (progression) => progression.slice(Math.floor(progression.length));
+const firstHalfOfProgression = (progression) => progression.slice(0, Math.ceil(progression.length / 2));
+const secondHalfOfProgression = (progression) => progression.slice(Math.floor(progression.length / 2));
 
 const GeneticAlgorithmFunctions = {
-    // creates and returns a population of chord progressions
-    seed: function() {
+    // creates and returns a population of chord progressions.
+    // if an existing progression is given, the population is filled with only that progression
+    seed: function(progression) {
+        if (progression) {
+            const population = [];
+            while (population.length < Configuration.size)
+                population.push(Utils.cloneProgression(progression));
+
+            return population;
+        }
+
         // * pick standard chord progressions
         const population = ChordProgressions.map(entity => {
             let progression = [];
@@ -103,10 +112,12 @@ const GeneticAlgorithmFunctions = {
     // mutates the individual and returns it
     mutate: function(individual) {
         // choose a random chord in the progression
-        let chord = individual[Math.floor(Math.random() * individual.length)];
+        const i = Math.floor(Math.random() * individual.length);
+        let chord = individual[i];
 
         // do a random mutation function
-        mutateFunctions[mutateFunctions.length * Math.random() << 0](chord);
+        chord = mutateFunctions[mutateFunctions.length * Math.random() << 0](chord);
+        individual[i] = chord;
 
         return individual;
     },
@@ -119,7 +130,7 @@ const GeneticAlgorithmFunctions = {
         return [ [...M1, ...F2], [...F1, ...M2] ];
     },
 
-    generation: function(population, generation, stats) {
+    generation: function(population) {
         // algorithm stops when an individual has reached the fitness threshold
         return (population.find(individual => individual.fitness > GaConfiguration.fitnessThreshold));
     },

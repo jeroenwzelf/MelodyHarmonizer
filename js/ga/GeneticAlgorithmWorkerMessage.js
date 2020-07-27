@@ -6,9 +6,26 @@ const GeneticAlgorithmWorkerMessage = (function() {
     }
     return {
         evolve: "evolve",
-        evolveMessage: function(song, sectionId) { return message(this.evolve, { song: Utils.Serialization.stringify(song), sectionId: sectionId }); },
+        evolveMessage: function(song, sectionId, existingProgression) {
+            return message(this.evolve, {
+                song: Utils.toStructuredClonableType(song),
+                sectionId: sectionId,
+                existingProgression: Utils.toStructuredClonableType(existingProgression),
+            });
+        },
         evolveResult: "evolveResult",
-        evolveResultMessage: function(result) { return message(this.evolveResult, { result: Utils.Serialization.stringify(result) }); },
+        evolveResultMessage: function(population, generation, stats, isFinished, section) {
+            return message(this.evolveResult, {
+                population: population.map(solution => {
+                    solution.entity = Utils.toStructuredClonableType(solution.entity);
+                    return solution;
+                }),
+                generation: generation,
+                stats: stats,
+                isFinished: isFinished,
+                section: section
+            });
+        },
         keyChanged: "keyChanged",
         keyChangedMessage: function(root, mode) { return message(this.keyChanged, { root: root, mode: mode }); },
     };

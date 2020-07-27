@@ -1,30 +1,29 @@
-const Serialization = {
-    "stringify": function (obj) {
-        return JSON.stringify(obj, function (key, value) {
-            if (value instanceof Function || typeof value == "function") return "__func__:" + value.toString();
-            if (value instanceof RegExp) return "__regex__:" + value;
-            return value;
-        });
-    }, "parse": function (str) {
-        return JSON.parse(str, function (key, value) {
-            if (typeof value != "string") return value;
-            if (value.lastIndexOf("__func__:", 0) === 0) return eval('(' + value.slice(9) + ')');
-            if (value.lastIndexOf("__regex__:", 0) === 0) return eval('(' + value.slice(10) + ')');
-            return value;
-        });
-    }
+import Chord from "../harmony/Chord.js";
+import Section from "../session/song/Section.js";
+import Measure from "../session/song/Measure.js";
+
+const chordFromStructuredClonableType = function(clonableChord) {
+    return clonableChord ? Chord.clone(clonableChord) : null;
 };
 
-const Clone = function(obj) {
-    if (obj == null || typeof obj != "object")
-        return obj;
+const measureFromStructuredClonableType = function(clonableMeasure) {
+    let measure = new Measure();
+    measure.beats = clonableMeasure.beats;
+    measure.chord = chordFromStructuredClonableType(clonableMeasure.chord);
 
-    return JSON.parse(JSON.stringify(obj));
+    return measure;
+};
+
+const sectionFromStructuredClonableType = function(clonableSection) {
+    return new Section(clonableSection.measures.map(measure => measureFromStructuredClonableType(measure)));
 };
 
 const Utils = {
-    Serialization: Serialization,
-    Clone: Clone,
+    toStructuredClonableType: obj => obj ? JSON.parse(JSON.stringify(obj)) : null,
+    songFromStructuredClonableType: song => song ? song.map(section => sectionFromStructuredClonableType(section)) : null,
+    progressionFromStructuredClonableType: progression => progression ? progression.map(chord => chordFromStructuredClonableType(chord)) : null,
+
+    cloneProgression: progression => progression ? progression.map(chord => Chord.clone(chord)) : null,
 };
 
 export default Utils;

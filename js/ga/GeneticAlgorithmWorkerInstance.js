@@ -3,12 +3,14 @@ import GaFunctions from "./GeneticAlgorithmFunctions.js";
 import GeneticAlgorithmWorkerMessage from "./GeneticAlgorithmWorkerMessage.js";
 import Utils from "../object/Utils.js";
 import KeyEvaluator from "../app/evaluators/harmony/KeyEvaluator.js";
+import SongNavigator from "../session/song/SongNavigator.js";
 
-const mutateOrNot = (entity) => Math.random() <= Configuration.mutation && GaFunctions.mutate ? GaFunctions.mutate(Utils.Clone(entity)) : entity;
+const mutateOrNot = (entity) => Math.random() <= Configuration.mutation && GaFunctions.mutate ? GaFunctions.mutate(Utils.cloneProgression(entity)) : entity;
 
 // Heavily inspired from https://github.com/subprotocol/genetic-js
-function generateProgressionPopulation(song, section) {
-    let entities = GaFunctions.seed();
+function generateProgressionPopulation(song, section, existingProgression) {
+    let progression = existingProgression ? SongNavigator.sectionFromId(song, section).progression() : null;
+    let entities = GaFunctions.seed(progression);
 
     for (let i = 0; i < Configuration.iterations; ++i) {
         // score and sort
@@ -26,7 +28,7 @@ function generateProgressionPopulation(song, section) {
         const isFinished = GaFunctions.generation(pop.slice(0, Configuration.maxResults), i, stats) || (i >= Configuration.iterations-1);
 
         if (isFinished || Configuration.skip === 0 || i % Configuration.skip === 0)
-            sendNotification(pop.slice(0, Configuration.maxResults), i, stats, isFinished, section);
+            postMessage(GeneticAlgorithmWorkerMessage.evolveResultMessage(pop.slice(0, Configuration.maxResults), i, stats, isFinished, section));
 
         if (isFinished)
             return;
@@ -41,7 +43,7 @@ function generateProgressionPopulation(song, section) {
             if (Math.random() <= Configuration.crossover // base crossover on specified probability
                 && newPop.length+1 < Configuration.size) { // keeps us from going 1 over the max population size
                 const parents = GaFunctions.select2(pop);
-                const children = GaFunctions.crossover(Utils.Clone(parents[0]), Utils.Clone(parents[1])).map(mutateOrNot);
+                const children = GaFunctions.crossover(Utils.cloneProgression(parents[0]), Utils.cloneProgression(parents[1])).map(mutateOrNot);
                 newPop.push(children[0], children[1]);
             } else {
                 newPop.push(mutateOrNot(GaFunctions.select1(pop)));
@@ -51,20 +53,17 @@ function generateProgressionPopulation(song, section) {
     }
 }
 
-const sendNotification = function(pop, generation, stats, isFinished, section) {
-    postMessage(GeneticAlgorithmWorkerMessage.evolveResultMessage({
-        population: pop,
-        generation: generation,
-        stats: stats,
-        isFinished: isFinished,
-        section: section,
-    }));
-};
-
 self.onmessage = e => {
     switch(e.data.message) {
-        case GeneticAlgorithmWorkerMessage.evolve: generateProgressionPopulation(Utils.Serialization.parse(e.data.args.song), e.data.args.sectionId); return;
-        case GeneticAlgorithmWorkerMessage.keyChanged: KeyEvaluator.set(e.data.args.root, e.data.args.mode); return;
+        case GeneticAlgorithmWorkerMessage.evolve:
+            generateProgressionPopulation(
+                Utils.songFromStructuredClonableType(e.data.args.song),
+                e.data.args.sectionId,
+                Utils.progressionFromStructuredClonableType(e.data.args.existingProgression));
+            return;
+        case GeneticAlgorithmWorkerMessage.keyChanged:
+            KeyEvaluator.set(e.data.args.root, e.data.args.mode);
+            return;
         default:
             console.log("unsupported message: " + e.data.message);
     }

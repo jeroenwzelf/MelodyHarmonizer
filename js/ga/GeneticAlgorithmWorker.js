@@ -1,6 +1,5 @@
 import Events from "../app/events/Events.js";
 import GeneticAlgorithmWorkerMessage from "./GeneticAlgorithmWorkerMessage.js";
-import Utils from "../object/Utils.js";
 import KeyEvaluator from "../app/evaluators/harmony/KeyEvaluator.js";
 
 const GeneticAlgorithmWorker = function() {
@@ -12,9 +11,8 @@ const GeneticAlgorithmWorker = function() {
     Instance.onmessage = e => {
         switch(e.data.message) {
             case GeneticAlgorithmWorkerMessage.evolveResult: {
-                const result = Utils.Serialization.parse(e.data.args.result);
-                if (result.isFinished)
-                    Events.GA.fireEvolveFinished(result.population, result.generation, result.stats, result.section);
+                if (e.data.args.isFinished)
+                    Events.GA.fireEvolveFinished(e.data.args.population, e.data.args.generation, e.data.args.stats, e.data.args.section);
             } return;
             default:
                 console.log("unsupported message: " + e.data.message);
@@ -22,8 +20,8 @@ const GeneticAlgorithmWorker = function() {
     };
 
     return {
-        evolve: function(song, sectionId) {
-            Instance.postMessage(GeneticAlgorithmWorkerMessage.evolveMessage(song, sectionId));
+        evolve: function(song, sectionId, existingProgression) {
+            Instance.postMessage(GeneticAlgorithmWorkerMessage.evolveMessage(song, sectionId, existingProgression));
         },
     };
 };

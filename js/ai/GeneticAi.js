@@ -6,6 +6,7 @@ import GaConfiguration from "../app/constants/ga/GaConfiguration.js";
 import Chord from "../harmony/Chord.js";
 import ChordAlterations from "../harmony/ChordAlterations.js";
 import KeyEvaluator from "../app/evaluators/harmony/KeyEvaluator.js";
+import SongNavigator from "../session/song/SongNavigator.js";
 
 const GeneticAi = (function() {
     let ga;
@@ -24,12 +25,10 @@ const GeneticAi = (function() {
     }
 
     function gaFinished(e) {
-        let individual;
-
         const population = e.population.filter((individual) => individual.fitness > GaConfiguration.fitnessThreshold);
-        if (population.length > 0)
-            individual = population[Math.floor(Math.random() * population.length)];
-        else individual = e.population[0];  // choose the best available below the threshold
+        const individual = population.length > 0 ?
+            population[Math.floor(Math.random() * population.length)] :
+            e.population[0]; // otherwise choose the best available below the threshold
 
         const progression = individual.entity.map(c => Chord.create(c.root, c.type, c.extension, c.alterations.map(a => ChordAlterations.fromName(a.name))));
         console.log("picked chord progression for section " + e.section + " (in " + KeyEvaluator.root + KeyEvaluator.mode + ")", progression);
@@ -39,11 +38,15 @@ const GeneticAi = (function() {
     function tick() {
         const position = Session.position();
         let section = position.section;
+        let existingProgression = null;
 
         if (position.beat !== 0)
             return;
 
         switch (position.measure) {
+            default:
+                existingProgression = SongNavigator.sectionFromId(Session.song(), section).progression();
+                break;
             case SongConstants.measuresInSection - 1:
                 ++section;
                 break;
@@ -52,7 +55,7 @@ const GeneticAi = (function() {
                     return;
         }
 
-        ga.evolve(Session.song(), section);
+        ga.evolve(Session.song(), section, existingProgression);
     }
 
     return {

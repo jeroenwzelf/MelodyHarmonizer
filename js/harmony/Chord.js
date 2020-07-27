@@ -60,6 +60,10 @@ const inferAlterations = function(intervals) {
     return alterations;
 };
 
+const cloneAlterations = function(alterations) {
+    return alterations.map(alteration => ChordAlterations.fromName(alteration.name));
+};
+
 const Chord = {
     fromNotes: function(notes) {
         const root = notes[0];
@@ -77,7 +81,7 @@ const Chord = {
             root: root,
             type: type,
             extension: extension,
-            alterations: alterations,
+            alterations: cloneAlterations(alterations),
             inversion: inversion ? inversion : 0,
 
             intervals: function() {
@@ -119,8 +123,15 @@ const Chord = {
 
                 return this.root + this.type.name + extensionName + alterationNames;
             },
+            clone: function() {
+                return Chord.create(this.root, this.type, this.extension, this.alterations, this.inversion);
+            },
         };
     },
+
+    clone: function(chord) {
+        return Chord.create(chord.root, chord.type, chord.extension, chord.alterations, chord.inversion);
+    }
 };
 
 export default Chord;
