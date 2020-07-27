@@ -1,9 +1,9 @@
-import Configuration from "../app/constants/ga/GaConfiguration.js";
+import Configuration from "../../app/constants/ga/GaConfiguration.js";
 import GaFunctions from "./GeneticAlgorithmFunctions.js";
 import GeneticAlgorithmWorkerMessage from "./GeneticAlgorithmWorkerMessage.js";
-import Utils from "../object/Utils.js";
-import KeyEvaluator from "../app/evaluators/harmony/KeyEvaluator.js";
-import SongNavigator from "../session/song/SongNavigator.js";
+import Utils from "../../object/Utils.js";
+import KeyEvaluator from "../../app/evaluators/harmony/KeyEvaluator.js";
+import SongNavigator from "../../session/song/SongNavigator.js";
 
 const mutateOrNot = (entity) => Math.random() <= Configuration.mutation && GaFunctions.mutate ? GaFunctions.mutate(Utils.cloneProgression(entity)) : entity;
 
