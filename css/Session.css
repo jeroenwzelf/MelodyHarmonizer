@@ -3,6 +3,8 @@
     display: flex;
 
     flex-direction: column;
+
+    background-color: inherit;
 }
 
 #sessionStartStopButton {
@@ -22,4 +24,8 @@
 
 #sessionInfoContainer > * {
     padding: 10px;
+}
+
+.viewerContainer {
+    background-color: darkblue;
 }

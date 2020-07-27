@@ -5,6 +5,7 @@
 	<link rel="shortcut icon" type="image/png" href="/img/favicon.png"/>
 
 	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="css/BpmContainer.css">
 	<link rel="stylesheet" type="text/css" href="css/BranchInfo.css">
 	<link rel="stylesheet" type="text/css" href="css/MidiDevices.css">
 	<link rel="stylesheet" type="text/css" href="css/KeySelectButtons.css">
@@ -30,7 +31,7 @@
 <body>
 	<div id="page" class="animate-bottom">
 		<nav class="navbar navbar-light bg-primary">
-			<a class="navbar-brand" href="#">MIDI Melody Harmonizer</a>
+			<a class="navbar-brand" href="">MIDI Melody Harmonizer</a>
 			<div id="branch-info-nav-item" class="nav-item">
 				<a class="nav-link" id="branch-info"></a>
 				<i class="fab fa-github"></i>
@@ -53,12 +54,12 @@
 			<button class="btn btn-info btn-lg" id="sessionStartStopButton">Start!</button>
 
 			<div id="sessionInfoContainer">
-				<div id="midiInputViewerContainer" class="shadow">
+				<div id="midiInputViewerContainer" class="shadow viewerContainer">
 					<div>input note:</div>
 					<div id="midiInputNote"></div>
 				</div>
 
-				<div id="midiOutputViewerContainer" class="shadow">
+				<div id="midiOutputViewerContainer" class="shadow viewerContainer">
 					<div>current chord:</div>
 					<div id="outputChord">
 						<div id="outputChord_root"></div>
@@ -68,15 +69,19 @@
 					</div>
 				</div>
 
+				<div id="bpmContainer">
+					<input id="bpmSlider" type="range" min="50" max="250" class="slider">
+					<span id="bpmValue"></span>
+					<span>bpm</span>
+				</div>
+
 				<div class="shadow form-check">
 					<input class="form-check-input" type="checkbox" checked id="enableMetronomeInput">
 					<label class="form-check-label" for="enableMetronomeInput"><i class="fas fa-drum"></i></label>
 				</div>
 			</div>
 
-			<!-- <small>Input a tempo between 50 - 280 bpm: </small> -->
 			<div id="sessionInputContainer">
-				<!-- <input id="sessionBpmInput" placeholder="120"> -->
 				<div id="keySelectButtons">
 					<div id="keyRootSelectButtons"></div>
 					<div id="keyModeSelectButtons"></div>
@@ -84,6 +89,27 @@
 			</div>
 
 		</div>
+
+		<div id="filler" style="display: flex; flex: 1"></div>
+
+		<footer class="page-footer font-small teal pt-4">
+			<div class="container-fluid text-center text-md-left">
+				<div class="row">
+					<!--<div class="col-md-6 mt-md-0 mt-3">
+						<h5 class="text-uppercase font-weight-bold">Footer text 1</h5>
+						<p>More some subtext</p>
+					</div>-->
+					<!--<hr class="clearfix w-100 d-md-none pb-3">
+					<div class="col-md-6 mb-md-0 mb-3">
+						<h5 class="text-uppercase font-weight-bold">Footer text 2</h5>
+						<p>Some text</p>
+					</div>-->
+				</div>
+			</div>
+			<div class="footer-copyright text-center py-3">© 2020 Jeroen Donkers
+				<a href="https://github.com/jeroenwzelf"> <i class="fab fa-github"></i> GitHub</a>
+			</div>
+		</footer>
 	</div>
 
 	<div id="loader"></div>

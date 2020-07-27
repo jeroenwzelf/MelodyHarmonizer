@@ -10,6 +10,8 @@ let UiSessionEvents = (function() {
 
         keyChanged: "changed/key/session/ui",
         fireKeyChanged: function(root, mode) { $(document).trigger($.Event(this.keyChanged, { root: root, mode: mode } )); },
+        bpmChanged: "changed/bpm/session/ui",
+        fireBpmChanged: function(bpm) { $(document).trigger($.Event(this.bpmChanged, { bpm: bpm } )); },
     };
 })();
 

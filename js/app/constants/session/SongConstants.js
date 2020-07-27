@@ -1,3 +1,5 @@
+import Events from "../../events/Events.js";
+
 let SongConstants = (function() {
     const bpm = 95;                 // Tempo
 
@@ -16,5 +18,7 @@ let SongConstants = (function() {
         beatLengthMillis: 60000 / bpm,
     }
 })();
+
+if (typeof $ !== 'undefined') Events.subscribe(Events.UI.Session.bpmChanged, e => SongConstants.bpm = e.bpm);
 
 export default SongConstants;
