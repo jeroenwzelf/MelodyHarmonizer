@@ -1,6 +1,6 @@
 const GaConfiguration = {
     size: 11,
-    crossover: 0.9,
+    crossover: 0.2,
     mutation: 1,
     iterations: 4,
     fittestAlwaysSurvives: true,

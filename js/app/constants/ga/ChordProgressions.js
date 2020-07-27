@@ -38,8 +38,6 @@ const ChordProgressions = [
     [ ScaleTriad(0), ScaleTriad(4), ScaleTriad(5), ScaleTriad(4) ],
     [ ScaleTriad(0), ScaleTriad(1, null, ChordExtensions.min7), ScaleTriad(0), ScaleTriad(3) ],
     [ ScaleTriad(3), ScaleTriad(4), ScaleTriad(2, ChordTypes.major), ScaleTriad(5) ],
-//[ ScaleTriad(0), ScaleTriad(7-HALFDOWN), ScaleTriad(3), ScaleTriad(0) ],
-
     [ ScaleTriad(0), ScaleTriad(1, ChordTypes.major), ScaleTriad(5), ScaleTriad(4) ],
 ];
 
