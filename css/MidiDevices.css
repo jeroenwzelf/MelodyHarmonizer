@@ -26,6 +26,7 @@
 
 .mididevice {
     cursor: pointer;
+    color: black !important;
 }
 
 .mididevice:hover {
