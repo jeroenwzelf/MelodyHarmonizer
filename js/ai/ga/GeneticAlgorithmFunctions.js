@@ -1,10 +1,9 @@
 import Configuration from "../../app/constants/ga/GaConfiguration.js";
+import GaConfiguration from "../../app/constants/ga/GaConfiguration.js";
 import KeyEvaluator from "../../app/evaluators/harmony/KeyEvaluator.js";
 import ChordTypes from "../../harmony/ChordTypes.js";
-import GeneticAlgorithmWorkerMessage from "./GeneticAlgorithmWorkerMessage.js";
 import Evaluators from "../../app/constants/ga/Evaluators.js";
 import ChordProgressions from "../../app/constants/ga/ChordProgressions.js";
-import GaConfiguration from "../../app/constants/ga/GaConfiguration.js";
 import ChordAlterations from "../../harmony/ChordAlterations.js";
 import ChordExtensions from "../../harmony/ChordExtensions.js";
 import SongConstants from "../../app/constants/session/SongConstants.js";
@@ -149,9 +148,13 @@ const GeneticAlgorithmFunctions = {
         return [ [...M1, ...F2], [...F1, ...M2] ];
     },
 
+    // returns true if the algorithm should finish evolving
+    // (when at least some percent -- the generation threshold -- of all individuals has reached the fitness threshold)
     generation: function(population) {
-        // algorithm stops when an individual has reached the fitness threshold
-        return (population.find(individual => individual.fitness > GaConfiguration.fitnessThreshold));
+        const sufficientFitnessPopulation =
+            population.filter(individual => individual.fitness > GaConfiguration.fitnessThreshold);
+
+        return sufficientFitnessPopulation.length > GaConfiguration.size * GaConfiguration.generationThreshold
     },
 
     // gets notification from GA web workers

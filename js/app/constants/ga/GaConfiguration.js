@@ -5,8 +5,8 @@ const GaConfiguration = {
     iterations: 4,
     fittestAlwaysSurvives: true,
     maxResults: 100,
-    webWorkers: true,
-    fitnessThreshold: 1,
+    fitnessThreshold: .4,
+    generationThreshold: .7,
 };
 
 export default GaConfiguration;
