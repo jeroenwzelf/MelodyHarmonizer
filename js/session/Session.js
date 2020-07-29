@@ -61,12 +61,7 @@ const Session = (function() {
 
     function stop() {
         Events.Midi.Devices.Output.fireNotesOff();
-        Events.unsubscribe(Events.Midi.Devices.Input.noteOnReceived, noteOnReceived);
         timer.stop();
-
-        AI.destroy();
-
-        Events.unsubscribe(Events.Session.Timer.tick, tick);
 
         console.log("sections", song);
         console.log("chords:", song.map(section => section.progression().map(chord => chord.toString())));
