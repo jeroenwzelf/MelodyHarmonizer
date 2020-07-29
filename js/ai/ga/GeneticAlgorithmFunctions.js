@@ -61,9 +61,28 @@ const Select2 = {
 const mutateFunctions = [
     chord => { chord.type = ChordTypes.random(type => type !== chord.type); return chord; },
     chord => { chord.extension = ChordExtensions.random(extension => extension !== chord.extension); return chord; },
-    chord => { chord.alterations.push(ChordAlterations.random(alteration => !chord.alterations.find(a => a !== alteration))); return chord; },
-    chord => { chord.inversion = Math.floor(Math.random() * chord.length); return chord; },
+    chord => { chord.inversion = chord.notes().length  * Math.random() << 0; return chord; },
     chord => KeyEvaluator.current().chords.randomTriad(),
+    chord => {
+        let availableAlterations = [];
+        const chordAlterationNames = chord.alterations.map(a => a ? a.name : null);
+
+        for (let alteration of ChordAlterations) {
+            if (chordAlterationNames.indexOf(alteration.name) < 0) {
+                availableAlterations.push(alteration);
+            }
+        }
+
+        if (availableAlterations.length === 0)
+            return chord;
+
+        const alteration = availableAlterations[availableAlterations.length * Math.random() << 0];
+        chord.alterations.push(alteration);
+
+        chord.alterations.sort((a, b) => a.name.substr(1) <= b.name.substr(1) ? 1 : -1);
+
+        return chord;
+    },
 ];
 
 const firstHalfOfProgression = (progression) => progression.slice(0, Math.ceil(progression.length / 2));
@@ -148,11 +167,11 @@ const GeneticAlgorithmFunctions = {
         for (let evaluator of Evaluators)
             fitness += evaluator.factor * evaluator.function(individual, song, sectionId);
 
-        return fitness;
+        return fitness / Evaluators.map(evaluator => evaluator.factor).reduce((a, b) => Math.abs(a) + Math.abs(b), 0);
     },
 
     optimize: Optimize.Maximize, // Choose the individual with the largest fitness score
-    select1: Select1.Random, // Select random individual to survive to the next generation
+    select1: Select1.Tournament3, // Select fittest individual to survive to the next generation
     select2: Select2.Tournament3, // When mating, pair two individuals, each the best from a random triplet
 };
 
