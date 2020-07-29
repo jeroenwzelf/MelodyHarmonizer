@@ -157,12 +157,6 @@ const GeneticAlgorithmFunctions = {
         return sufficientFitnessPopulation.length > GaConfiguration.size * GaConfiguration.generationThreshold
     },
 
-    // gets notification from GA web workers
-    notification: function(population, generation, stats, isFinished) {
-        if (isFinished)
-            postMessage(GeneticAlgorithmWorkerMessage.evolveResultMessage(population, generation, stats));
-    },
-
     // returns the fitness score for an individual
     fitness: function(individual, song, sectionId) {
         let fitness = 0;
