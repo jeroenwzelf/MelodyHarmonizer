@@ -33,8 +33,7 @@ const MidiDevices = function(midi) {
 			output.notesOff();
 	});
 
-	init(midi);
-	function init(midi) {
+	const init = function(midi) {
 		let i = midi.inputs.values();
 		for (let device = i.next(); device && !device.done; device = i.next())
 			inputs.push(MidiInput(device.value));
@@ -44,7 +43,7 @@ const MidiDevices = function(midi) {
 		for (let device = i.next(); device && !device.done; device = i.next())
 			outputs.push(MidiOutput(device.value));
 		Events.Midi.Devices.fireOutputDevicesChanged(midi.outputs);
-	}
+	}(midi);
 
 	return {
 		inputs: inputs,
