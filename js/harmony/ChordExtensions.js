@@ -14,9 +14,10 @@ const ChordExtensions = {
     maj13: ChordExtension("maj13", [11, 14, 17, 21]),
     min13: ChordExtension("13", [10, 14, 17, 21]),
 
-    [Symbol.iterator]: function* () { for (let key in this) if (this.hasOwnProperty(key) && key !== "random") yield this[key]; },
+    [Symbol.iterator]: function* () { for (let key in this) if (this.hasOwnProperty(key) && key !== "list" && key !== "random") yield this[key]; },
+    list: function() { return (Object.keys(this)).filter(key => key !== "list" && key !== "fromName") },
     random: function(filter) {
-        let keys = (Object.keys(this)).filter(key => key !== "random");
+        let keys = (Object.keys(this)).filter(key => key !== "list" && key !== "random");
 
         if (filter != null)
             keys = keys.filter(filter);

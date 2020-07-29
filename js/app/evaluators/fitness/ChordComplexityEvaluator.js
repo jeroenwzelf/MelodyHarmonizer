@@ -1,14 +1,31 @@
 import SongConstants from "../../constants/session/SongConstants.js";
 import ChordTypes from "../../../harmony/ChordTypes.js";
 import ChordAlterations from "../../../harmony/ChordAlterations.js";
+import ChordExtensions from "../../../harmony/ChordExtensions.js";
+
+const typeComplexity = function(type) {
+    return type === ChordTypes.augmented ? 1 : 0;
+};
+
+const extensionComplexity = function(extension) {
+    if (!extension)
+        return 0;
+
+    let complexity = 1;
+    for (let availableExtension of ChordExtensions) {
+        if (availableExtension.name === extension.name)
+            return complexity / ChordExtensions.list().length;
+
+        ++complexity;
+    }
+};
+
+const alterationsComplexity = function(alterations) {
+    return alterations.length / ChordAlterations.list().length;
+};
 
 const chordComplexity = function(chord) {
-    let complexity = chord.alterations.length;
-
-    if (chord.type === ChordTypes.augmented)
-        ++complexity;
-
-    return complexity / ChordAlterations.list().length + 1;
+    return (typeComplexity(chord.type) + extensionComplexity(chord.extension) + alterationsComplexity(chord.alterations)) / 3;
 };
 
 /*
