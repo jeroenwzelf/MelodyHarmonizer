@@ -44,6 +44,8 @@ const Session = (function() {
         const beat = SongNavigator.beat(song, position);
         beat.timestamp = event.timestamp;
 
+        Events.Session.Song.fireCurrentProgressionChange(SongNavigator.section(song, position).progression(), position);
+
         if (position.beat === 0) {
             if (metronomeSoundEnabled) metronome.clickHard();
             Events.Midi.Devices.Output.fireNotesOff();
@@ -66,7 +68,8 @@ const Session = (function() {
 
         Events.unsubscribe(Events.Session.Timer.tick, tick);
 
-        console.log(song);
+        console.log("sections", song);
+        console.log("chords:", song.map(section => section.progression().map(chord => chord.toString())));
     }
 
     return {

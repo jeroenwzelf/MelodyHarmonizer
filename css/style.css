@@ -40,3 +40,7 @@ html {
     position: absolute;
     bottom: 0;
 }
+
+.btn {
+    text-transform: none !important;
+}

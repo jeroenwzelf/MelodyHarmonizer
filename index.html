@@ -11,6 +11,7 @@
 	<link rel="stylesheet" type="text/css" href="css/KeySelectButtons.css">
 	<link rel="stylesheet" type="text/css" href="css/InputViewer.css">
 	<link rel="stylesheet" type="text/css" href="css/OutputViewer.css">
+	<link rel="stylesheet" type="text/css" href="css/ProgressionViewer.css">
 	<link rel="stylesheet" type="text/css" href="css/Session.css">
 	<link rel="stylesheet" type="text/css" href="css/PageLoader.css">
 	
@@ -61,12 +62,7 @@
 
 				<div id="midiOutputViewerContainer" class="shadow viewerContainer">
 					<div>current chord:</div>
-					<div id="outputChord">
-						<div id="outputChord_root"></div>
-						<div id="outputChord_type"></div>
-						<div id="outputChord_extension"></div>
-						<div id="outputChord_alterations"></div>
-					</div>
+					<div class="outputChord"></div>
 				</div>
 
 				<div id="bpmContainer">
@@ -90,6 +86,8 @@
 			</div>
 
 		</div>
+
+		<div id="progressionViewerContainer"></div>
 
 		<div id="filler" style="display: flex; flex: 1"></div>
 

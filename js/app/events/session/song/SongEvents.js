@@ -1,7 +1,11 @@
 let SongEvents = (function() {
     return {
-        chordChange: "chordchange/song/session",
+        chordChange: "chord/change/song/session",
         fireChordChange: function(chord) { $(document).trigger($.Event(this.chordChange, { chord: chord } )); },
+        currentProgressionChange: "progression/change/song/session",
+        fireCurrentProgressionChange: function(progression, position) {
+            $(document).trigger($.Event(this.currentProgressionChange, { progression: progression, position: position } ));
+        },
     };
 })();
 

@@ -7,19 +7,19 @@
     margin: 0 5px;
 }
 
-#outputChord {
+.outputChord {
     display: flex;
     height: 1.2em;
 }
 
-#outputChord_root {
+.outputChord_root {
     font-size: 120% !important;
 }
 
-#outputChord_extension {
+.outputChord_extension {
     font-size: 80% !important;
 }
 
-#outputChord_alterations {
+.outputChord_alterations {
     font-size: 70% !important;
 }

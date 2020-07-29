@@ -6,6 +6,7 @@ import UiSession from "./UiSession.js";
 import UiPageLoader from "./UiPageLoader.js";
 import UiBranchInfo from "./UiBranchInfo.js";
 import UiBpm from "./UiBpm.js";
+import UiProgressionViewer from "./UiProgressionViewer.js";
 
 const UI = (function() {
 	return {
@@ -16,6 +17,7 @@ const UI = (function() {
 			UiKeySelectButtons();
 			UiMidiDevices();
 			UiOutputViewer();
+			UiProgressionViewer();
 			UiSession();
 			UiPageLoader();
 		},
