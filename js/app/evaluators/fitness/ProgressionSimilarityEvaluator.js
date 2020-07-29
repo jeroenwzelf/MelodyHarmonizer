@@ -34,7 +34,7 @@ const progressionSimilarity = function(a, b) {
 const ProgressionSimilarityEvaluator = function(individual, song, sectionId) {
     const position = new Position(sectionId, 0, 0);
     if (position.previous() == null)
-        return 1;
+        return .5;
 
     const previous = SongNavigator.section(song, position.previous());
     return progressionSimilarity(previous.progression(), individual);

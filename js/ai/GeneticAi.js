@@ -46,7 +46,7 @@ const GeneticAi = (function() {
     function gaFinished(e) {
         const population = e.population.filter((individual) => individual.fitness > GaConfiguration.fitnessThreshold);
         if (population.length === 0)
-            console.info("No individual below the threshold (" + GaConfiguration.fitnessThreshold + ") found!",
+            console.warn("No individual below the threshold (" + GaConfiguration.fitnessThreshold + ") found!",
                 "Choosing the best available.");
 
         const individual = population.length > 0 ?

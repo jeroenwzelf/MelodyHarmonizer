@@ -5,9 +5,15 @@ import MidiNotes from "../../../midi/MidiNotes.js";
 const beatSimilarity = function(chord, melody) {
     let similarity = 0;
 
-    for (let note of melody)
-        if (!note || chord.indexOf(MidiNotes.keyToString(note).replace(/\d+/g, '')) >= 0)
-            ++similarity;
+    for (let note of melody) {
+        if (!note) {
+            similarity += .5;
+            continue;
+        }
+
+        chord.indexOf(MidiNotes.keyToString(note).replace(/\d+/g, '')) >= 0 ?
+            ++similarity : --similarity;
+    }
 
     return similarity / melody.length;
 };
@@ -36,7 +42,7 @@ const progressionSimilarity = function(progression, measures) {
 * */
 const MelodySimilarityEvaluator = function(individual, song, sectionId) {
     if (sectionId === 0)
-        return 1;
+        return .5;
 
     const current = SongNavigator.sectionFromId(song, sectionId-1);
 

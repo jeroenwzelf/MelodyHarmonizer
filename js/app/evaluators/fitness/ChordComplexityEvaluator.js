@@ -31,6 +31,7 @@ const chordComplexity = function(chord) {
 /*
 * This evaluator rates a progression based on the complexity of its chords.
 * Complexity is measured by the average percentage of altered notes and augmented chord types.
+* The inverse of the complexity is taken as fitness since simpler chords are often more desirable.
 * */
 const ChordComplexityEvaluator = function(individual) {
     let complexity = 0;
@@ -38,7 +39,7 @@ const ChordComplexityEvaluator = function(individual) {
     for (let i=0; i<SongConstants.measuresInSection; ++i)
         complexity += chordComplexity(individual[i]);
 
-    return complexity / SongConstants.measuresInSection;
+    return 1 - (complexity / SongConstants.measuresInSection);
 };
 
 export default ChordComplexityEvaluator;
