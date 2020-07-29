@@ -44,22 +44,15 @@ const Session = (function() {
         const beat = SongNavigator.beat(song, position);
         beat.timestamp = event.timestamp;
 
-        Events.Session.Song.fireCurrentProgressionChange(SongNavigator.section(song, position).progression(), position);
-
-        if (position.beat === 0) {
-            if (metronomeSoundEnabled) metronome.clickHard();
-            Events.Midi.Devices.Output.fireNotesOff();
-
-            const measure = SongNavigator.measure(song, position);
-            if (measure.chord != null) {
-                measure.chord.play();
-                Events.Session.Song.fireChordChange(measure.chord);
-            }
-        }
-        else if (metronomeSoundEnabled) metronome.clickSoft();
+        if (metronomeSoundEnabled)
+            position.beat === 0 ? metronome.clickHard() : metronome.clickSoft();
     }
 
     function stop() {
+        AI.destroy();
+        Events.unsubscribe(Events.Midi.Devices.Input.noteOnReceived, noteOnReceived);
+
+        Events.unsubscribe(Events.Session.Timer.tick, tick);
         Events.Midi.Devices.Output.fireNotesOff();
         timer.stop();
 

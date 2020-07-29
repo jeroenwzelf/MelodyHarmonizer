@@ -5,8 +5,27 @@ import SongConstants from "../app/constants/session/SongConstants.js";
 import GaConfiguration from "../app/constants/ga/GaConfiguration.js";
 import Chord from "../harmony/Chord.js";
 import ChordAlterations from "../harmony/ChordAlterations.js";
-import KeyEvaluator from "../app/evaluators/harmony/KeyEvaluator.js";
 import SongNavigator from "../session/song/SongNavigator.js";
+
+const playChord = chord => {
+    if (!chord)
+        return;
+
+    Events.Midi.Devices.Output.fireNotesOff();
+
+    chord.play();
+    Events.Session.Song.fireChordChange(chord);
+};
+
+const playIfProgressionIsNow = function(progression, section) {
+    const current = Session.position();
+
+    if (current.section !== section)
+        return;
+
+    playChord(progression[current.measure]);
+    Events.Session.Song.fireCurrentProgressionChange(SongNavigator.section(Session.song(), current).progression(), current);
+};
 
 const GeneticAi = (function() {
     let ga;
@@ -26,24 +45,33 @@ const GeneticAi = (function() {
 
     function gaFinished(e) {
         const population = e.population.filter((individual) => individual.fitness > GaConfiguration.fitnessThreshold);
+        if (population.length === 0)
+            console.info("No individual below the threshold (" + GaConfiguration.fitnessThreshold + ") found!",
+                "Choosing the best available.");
+
         const individual = population.length > 0 ?
             population[Math.floor(Math.random() * population.length)] :
             e.population[0]; // otherwise choose the best available below the threshold
 
         const progression = individual.entity.map(c => Chord.create(c.root, c.type, c.extension, c.alterations.map(a => ChordAlterations.fromName(a.name))));
-        console.log("picked chord progression for section " + e.section + " (in " + KeyEvaluator.root + KeyEvaluator.mode + ")", progression);
+        console.info("section " + e.section, JSON.parse(JSON.stringify(progression.map(chord => chord.toString()))), "fitness " + individual.fitness);
+
         Session.song()[e.section].progression(progression);
+        playIfProgressionIsNow(progression, e.section);
     }
 
     function tick() {
-        const position = Session.position();
-        let section = position.section;
+        const current = Session.position();
+        let section = current.section;
         let existingProgression = null;
 
-        if (position.beat !== 0)
+        if (current.beat !== 0)
             return;
 
-        switch (position.measure) {
+        playChord(SongNavigator.section(Session.song(), current).progression()[current.measure]);
+        Events.Session.Song.fireCurrentProgressionChange(SongNavigator.section(Session.song(), current).progression(), current);
+
+        switch (current.measure) {
             default:
                 existingProgression = SongNavigator.sectionFromId(Session.song(), section).progression();
                 break;
