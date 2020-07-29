@@ -49,11 +49,7 @@ const inferAlterations = function(intervals) {
 
     if (intervals.indexOf(17 + 1) >= 0)
         alterations.push(ChordAlterations.s11);
-    if (intervals.indexOf(17 - 1) >= 0)
-        alterations.push(ChordAlterations.b11);
 
-    if (intervals.indexOf(21 + 1) >= 0)
-        alterations.push(ChordAlterations.s13);
     if (intervals.indexOf(21 - 1) >= 0)
         alterations.push(ChordAlterations.b13);
 
@@ -73,7 +69,7 @@ const Chord = {
         const extension = inferExtensionType(intervals);
         const alterations = inferAlterations(intervals);
 
-        return Chord.create(root, type, extension, alterations, 0);
+        return Chord.create(root, type, extension, alterations);
     },
 
     create: function(root, type, extension, alterations, inversion) {
