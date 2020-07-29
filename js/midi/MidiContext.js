@@ -22,7 +22,7 @@ const MidiContext = (function() {
 			if (!navigator.requestMIDIAccess)
 				throw new Error("No MIDI support present in your browser!");
 
-			navigator.requestMIDIAccess().then(onMidiSuccess, onMidiReject);
+			navigator.requestMIDIAccess({ sysex: false }).then(onMidiSuccess, onMidiReject);
 		},
 	};
 })();
