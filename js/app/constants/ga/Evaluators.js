@@ -4,10 +4,10 @@ import MelodySimilarityEvaluator from "../../evaluators/fitness/MelodySimilarity
 import ChordComplexityEvaluator from "../../evaluators/fitness/ChordComplexityEvaluator.js";
 
 const Evaluators = [
-    //FitnessEvaluator(1, Math.random),
-    FitnessEvaluator(10, ProgressionSimilarityEvaluator),
-    FitnessEvaluator(1, MelodySimilarityEvaluator),
-    FitnessEvaluator(1, ChordComplexityEvaluator),
+    FitnessEvaluator(.1, Math.random),
+    FitnessEvaluator(4, ProgressionSimilarityEvaluator),
+    FitnessEvaluator(8, MelodySimilarityEvaluator),
+    FitnessEvaluator(-15, ChordComplexityEvaluator),
 ];
 
 export default Evaluators;
