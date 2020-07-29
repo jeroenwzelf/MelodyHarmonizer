@@ -103,6 +103,7 @@ const Chord = {
             notes: function() {
                 let notes = [];
                 let intervals = this.intervals();
+                if (!this.inversion) this.inversion = 0;
 
                 for (let i=0; i<intervals.length; ++i)
                     notes.push(Notes.atInterval(this.root, intervals[(i + this.inversion) % intervals.length]));
