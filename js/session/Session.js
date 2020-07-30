@@ -49,7 +49,6 @@ const Session = (function() {
         Events.Midi.Devices.Output.fireNotesOff();
         timer.stop();
 
-        console.info("session result", song.map(section => section.toString()));
         console.log(LilyPadWriter.getLilyPadFormattedText(song));
     }
 
