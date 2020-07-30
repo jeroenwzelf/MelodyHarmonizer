@@ -5,7 +5,7 @@ const GaConfiguration = {
     iterations: 30,
     fittestAlwaysSurvives: true,
     maxResults: 100,
-    fitnessThreshold: .4,
+    fitnessThreshold: .6,
     generationThreshold: .8,
 };
 
