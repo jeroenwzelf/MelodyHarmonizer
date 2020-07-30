@@ -87,7 +87,6 @@ const LilyPadWriter = function() {
         const executionTimes = song.map(section => section.measures.map(measure => (measure.executionTime) ? parseInt(measure.executionTime) : null)).flat(2);
         const sum = executionTimes.reduce((a, b) => (a ? (b ? a + b : a) : (b ? b : 0)), 0);
 
-        console.log(executionTimes, sum);
         return sum / executionTimes.length;
     }
 
