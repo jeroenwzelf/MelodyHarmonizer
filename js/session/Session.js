@@ -56,8 +56,7 @@ const Session = (function() {
         Events.Midi.Devices.Output.fireNotesOff();
         timer.stop();
 
-        console.log("sections", song);
-        console.log("chords:", song.map(section => section.progression().map(chord => chord.toString())));
+        console.info("session result", song.map(section => section.toString()));
     }
 
     return {

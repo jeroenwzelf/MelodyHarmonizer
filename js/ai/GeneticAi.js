@@ -57,6 +57,7 @@ const GeneticAi = (function() {
         console.info("section " + e.section, JSON.parse(JSON.stringify(progression.map(chord => chord.toString()))), "fitness " + individual.fitness);
 
         Session.song()[e.section].progression(progression);
+        Session.song()[e.section].fitness = individual.fitness;
         playIfProgressionIsNow(progression, e.section);
     }
 
