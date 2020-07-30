@@ -5,11 +5,8 @@ import GaConfiguration from "../app/constants/ga/GaConfiguration.js";
 
 /*
 * Some crude formatter which converts the song structure to a LilyPond file.
-* Chords are limited to triads.
 * */
 const LilyPadWriter = function() {
-    let previousNote;
-
     function getLilyPadFormattedOctaves(note) {
         let octaves = "";
 
@@ -24,7 +21,6 @@ const LilyPadWriter = function() {
         if (!note)
             return "s16";
 
-        previousNote = note;
         return note
             .replace(/\d+/g, '')
             .replace("#", "is")
@@ -62,8 +58,13 @@ const LilyPadWriter = function() {
 
         const root = getLilyPadFormattedChordNote(chord.root);
         const type = (chord.type.name === "min") ? "m" : chord.type.name;
+        const extension = (chord.extension) ? chord.extension.name : "";
 
-        return root + "1" + (type === "" ? "" : (":" + type));
+        let alterations = "";
+        for (let alteration of chord.alterations)
+            alterations += "." + alteration.name.substr(1) + (alteration.name[0] === '#' ? '+' : '-');
+
+        return root + "1:" + type + extension + alterations;
     }
 
     function getLilyPadFormattedChords(song) {
@@ -80,6 +81,14 @@ const LilyPadWriter = function() {
             chords += "\n";
         }
         return chords;
+    }
+
+    function averageExecutionTime(song) {
+        const executionTimes = song.map(section => section.measures.map(measure => (measure.executionTime) ? parseInt(measure.executionTime) : null)).flat(2);
+        const sum = executionTimes.reduce((a, b) => (a ? (b ? a + b : a) : (b ? b : 0)), 0);
+
+        console.log(executionTimes, sum);
+        return sum / executionTimes.length;
     }
 
     function getLilyPadFormattedConfiguration() {
@@ -106,6 +115,7 @@ const LilyPadWriter = function() {
             "lead = \\chordmode {\n" +
                 getLilyPadFormattedChords(song) +
             "}\n\n" +
+            "% avg execution time: " + averageExecutionTime(song) + "ms\n\n" +
             "\\score {\n" +
             " <<\n" +
             "  \\new ChordNames \\lead\n" +
