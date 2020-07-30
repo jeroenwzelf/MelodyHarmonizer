@@ -5,9 +5,9 @@ import ChordComplexityEvaluator from "../../evaluators/fitness/ChordComplexityEv
 
 const Evaluators = [
     //FitnessEvaluator(.1, Math.random),
-    FitnessEvaluator(8, ProgressionSimilarityEvaluator),
-    FitnessEvaluator(3, MelodySimilarityEvaluator),
-    FitnessEvaluator(5, ChordComplexityEvaluator),
+    FitnessEvaluator(4, ProgressionSimilarityEvaluator),
+    FitnessEvaluator(1, MelodySimilarityEvaluator),
+    FitnessEvaluator(3, ChordComplexityEvaluator),
 ];
 
 export default Evaluators;
