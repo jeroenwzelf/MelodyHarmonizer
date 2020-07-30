@@ -6,9 +6,10 @@ import Position from "./song/Position.js";
 import Events from "../app/events/Events.js";
 import SongConstants from "../app/constants/session/SongConstants.js";
 import Section from "./song/Section.js";
+import LilyPadWriter from "../lilypad/LilyPadWriter.js";
+import MidiInputProvider from "./MidiInputProvider.js";
 
 const Session = (function() {
-    const AI = GeneticAi;
     let timer, metronome, position, song;
     let metronomeSoundEnabled = true;
 
@@ -21,19 +22,11 @@ const Session = (function() {
 
         position = new Position(-1, -1, -1);
         song = new Array(1).fill(Section());
-        AI.init();
+
+        GeneticAi.init();
+        MidiInputProvider.start();
 
         timer.start(SongConstants.bpm);
-        Events.subscribe(Events.Midi.Devices.Input.noteOnReceived, noteOnReceived);
-    }
-
-    function noteOnReceived(e) {
-        const beat = SongNavigator.beat(song, position);
-
-        const noteTimeInBeat = e.midiMessage.timestamp - beat.timestamp;
-        const percentageNoteLocation = noteTimeInBeat / SongConstants.beatLengthMillis;
-
-        beat.notes[Math.round(percentageNoteLocation * (SongConstants.notesInBeat - 1))] = e.midiMessage.key;
     }
 
     function tick(event) {
@@ -49,14 +42,15 @@ const Session = (function() {
     }
 
     function stop() {
-        AI.destroy();
-        Events.unsubscribe(Events.Midi.Devices.Input.noteOnReceived, noteOnReceived);
+        GeneticAi.destroy();
+        MidiInputProvider.stop();
 
         Events.unsubscribe(Events.Session.Timer.tick, tick);
         Events.Midi.Devices.Output.fireNotesOff();
         timer.stop();
 
         console.info("session result", song.map(section => section.toString()));
+        console.log(LilyPadWriter.getLilyPadFormattedText(song));
     }
 
     return {
