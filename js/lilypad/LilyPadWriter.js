@@ -19,8 +19,6 @@ const LilyPadWriter = function() {
         let bOctave = parseInt(b.match(/\d+/)[0]);
 
         let difference = aOctave - bOctave;
-        console.log(a, b, aOctave, bOctave, difference);
-
         for (; difference !== 0; (difference > 0) ? --difference : ++difference)
             octaveDifference += (difference > 0) ? "," : "'";
 
