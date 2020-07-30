@@ -1,6 +1,7 @@
 import MidiNotes from "../midi/MidiNotes.js";
 import SongConstants from "../app/constants/session/SongConstants.js";
 import KeyEvaluator from "../app/evaluators/harmony/KeyEvaluator.js";
+import GaConfiguration from "../app/constants/ga/GaConfiguration.js";
 
 /*
 * Some crude formatter which converts the song structure to a LilyPond file.
@@ -9,32 +10,26 @@ import KeyEvaluator from "../app/evaluators/harmony/KeyEvaluator.js";
 const LilyPadWriter = function() {
     let previousNote;
 
-    function getLilyPadFormattedOctaveDifference(a, b) {
-        let octaveDifference = "";
+    function getLilyPadFormattedOctaves(note) {
+        let octaves = "";
 
-        if (!a || !b)
-            return octaveDifference;
+        let noteOctave = parseInt(note.match(/\d+/)[0]);
+        for (; noteOctave !== 4; (noteOctave > 4) ? --noteOctave : ++noteOctave)
+            octaves += (noteOctave > 4) ? "'" : ",";
 
-        let aOctave = parseInt(a.match(/\d+/)[0]);
-        let bOctave = parseInt(b.match(/\d+/)[0]);
-
-        let difference = aOctave - bOctave;
-        for (; difference !== 0; (difference > 0) ? --difference : ++difference)
-            octaveDifference += (difference > 0) ? "," : "'";
-
-        return octaveDifference;
+        return octaves;
     }
 
     function getLilyPadFormattedMelodyNote(note) {
         if (!note)
             return "s16";
 
-        const octaveDifference = getLilyPadFormattedOctaveDifference(previousNote, note);
         previousNote = note;
-        return (note
+        return note
             .replace(/\d+/g, '')
             .replace("#", "is")
-            + octaveDifference).toLowerCase() + "16";
+            .toLowerCase() +
+            getLilyPadFormattedOctaves(note) + "16";
     }
 
     function getLilyPadFormattedMelody(song) {
@@ -62,6 +57,9 @@ const LilyPadWriter = function() {
     }
 
     function getLilyPadFormattedChord(chord) {
+        if (!chord)
+            return "s1";
+
         const root = getLilyPadFormattedChordNote(chord.root);
         const type = (chord.type.name === "min") ? "m" : chord.type.name;
 
@@ -71,16 +69,35 @@ const LilyPadWriter = function() {
     function getLilyPadFormattedChords(song) {
         let chords = "";
         for (let section of song) {
-            for (let measure of section.measures)
-                chords += " " + getLilyPadFormattedChord(measure.chord) + " |\n";
+            for (let measure of section.measures) {
+                chords +=
+                    "% chord: " + (measure.playedChord ? measure.playedChord.toString() : "-") +
+                    ", fitness: " + (measure.fitness ? measure.fitness : "-") +
+                    ", execution time: " + (measure.executionTime ? measure.executionTime + "ms" : "-") +
+                    "\n";
+                chords += " " + getLilyPadFormattedChord(measure.playedChord) + " |\n";
+            }
             chords += "\n";
         }
         return chords;
     }
 
+    function getLilyPadFormattedConfiguration() {
+        return "% GaConfiguration:\n" +
+            "  % size: " + GaConfiguration.size + "\n" +
+            "  % crossover: " + GaConfiguration.crossover + "\n" +
+            "  % mutation: " + GaConfiguration.mutation + "\n" +
+            "  % iterations: " + GaConfiguration.iterations + "\n" +
+            "  % fittestAlwaysSurvives: " + GaConfiguration.fittestAlwaysSurvives + "\n" +
+            "  % maxResults: " + GaConfiguration.maxResults + "\n" +
+            "  % fitnessThreshold: " + GaConfiguration.fitnessThreshold + "\n" +
+            "  % generationThreshold: " + GaConfiguration.generationThreshold + "\n\n\n";
+    }
+
     function getLilyPadFormattedText(song) {
         return "\\version \"2.18.2\"\n\n" +
-            "melody = \\relative c' {\n" +
+            getLilyPadFormattedConfiguration() +
+            "melody = {\n" +
             " \\key " + KeyEvaluator.root.replace("#", "is").toLowerCase() + "\\" + (KeyEvaluator.mode === "aeolian" ? "minor" : "major") + "\n" +
             " \\time " + SongConstants.beatsInMeasure + "/" + SongConstants.notesInBeat + "\n" +
             " \\tempo  \"allegretto\" 4 = " + $("#bpmSlider").val() + "\n" +

@@ -16,7 +16,6 @@ const Section = function(measures) {
 
     return {
         measures: _measures,
-        fitness: null,
         progression: function(progression) {
             if (progression != null) {
                 for (let i=0; i<progression.length; ++i)
@@ -31,11 +30,12 @@ const Section = function(measures) {
             return progression;
         },
 
+        fitness: null,
         toString: function() {
             return {
                 chords: progressionToString(this.progression()),
                 notes: notesToString(this.measures),
-                fitness: this.fitness
+                fitness: this.fitness,
             };
         },
     }

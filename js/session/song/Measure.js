@@ -5,6 +5,10 @@ const Measure = function() {
     return {
         beats: new Array(SongConstants.beatsInMeasure).fill(0).map(Beat),
         chord: null,
+
+        executionTime: null,
+        fitness: null,
+        playedChord: null,
     }
 };
 

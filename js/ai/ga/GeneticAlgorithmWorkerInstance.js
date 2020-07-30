@@ -3,14 +3,12 @@ import GaFunctions from "./GeneticAlgorithmFunctions.js";
 import GeneticAlgorithmWorkerMessage from "./GeneticAlgorithmWorkerMessage.js";
 import Utils from "../../object/Utils.js";
 import KeyEvaluator from "../../app/evaluators/harmony/KeyEvaluator.js";
-import SongNavigator from "../../session/song/SongNavigator.js";
 
 const mutateOrNot = (entity) => Math.random() <= Configuration.mutation && GaFunctions.mutate ? GaFunctions.mutate(Utils.cloneProgression(entity)) : entity;
 
 // Heavily inspired from https://github.com/subprotocol/genetic-js
 function generateProgressionPopulation(song, section, existingProgression) {
-    let progression = existingProgression ? SongNavigator.sectionFromId(song, section).progression() : null;
-    let entities = GaFunctions.seed(progression);
+    let entities = GaFunctions.seed(existingProgression);
 
     for (let i = 0; i < Configuration.iterations; ++i) {
         // score and sort
