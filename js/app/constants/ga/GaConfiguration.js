@@ -4,7 +4,7 @@ const GaConfiguration = {
     mutation: .4,
     iterations: 80,
     fittestAlwaysSurvives: true,
-    maxResults: 100,
+    maxResults: 500,
     fitnessThreshold: .7,
     generationThreshold: .6,
 };
