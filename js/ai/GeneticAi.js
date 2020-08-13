@@ -3,8 +3,6 @@ import Session from "../session/Session.js";
 import Events from "../app/events/Events.js";
 import SongConstants from "../app/constants/session/SongConstants.js";
 import GaConfiguration from "../app/constants/ga/GaConfiguration.js";
-import Chord from "../harmony/Chord.js";
-import ChordAlterations from "../harmony/ChordAlterations.js";
 import SongNavigator from "../session/song/SongNavigator.js";
 import Position from "../session/song/Position.js";
 
@@ -63,14 +61,13 @@ const GeneticAi = (function() {
             population[Math.floor(Math.random() * population.length)] :
             e.population[0]; // otherwise choose the best available below the threshold
 
-        const progression = individual.entity.map(c => Chord.create(c.root, c.type, c.extension, c.alterations.map(a => ChordAlterations.fromName(a.name))));
-        console.info("section " + e.section, JSON.parse(JSON.stringify(progression.map(chord => chord.toString()))), "fitness " + individual.fitness);
+        console.info("section " + e.section, JSON.parse(JSON.stringify(individual.entity.map(chord => chord.toString()))), "fitness " + individual.fitness);
 
         const section = Session.song()[e.section];
-        section.progression(progression);
+        section.progression(individual.entity);
         section.fitness = individual.fitness;
 
-        playIfProgressionIsNow(progression, individual.fitness, e.section);
+        playIfProgressionIsNow(individual.entity, individual.fitness, e.section);
     }
 
     function tick() {

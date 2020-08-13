@@ -50,6 +50,7 @@ const Session = (function() {
         timer.stop();
 
         console.log(LilyPadWriter.getLilyPadFormattedText(song));
+        console.log(song);
     }
 
     return {

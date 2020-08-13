@@ -13,12 +13,12 @@ const ChordTypes = {
     sus2: ChordType("sus2", [2, 7]),
     sus4: ChordType("sus4", [5, 7]),
 
-    [Symbol.iterator]: function* () { for (let key in this) if (this.hasOwnProperty(key) && key !== "random") yield this[key]; },
+    [Symbol.iterator]: function* () { for (const value of this.list()) yield value; },
+    list: function() { return (Object.keys(this)).filter(key => this.hasOwnProperty(key) && key !== "list" && key !== "random").map(key => this[key]); },
     random: function(filter) {
-        let keys = (Object.keys(this)).filter(key => key !== "random");
-        if (filter != null)
-            keys.filter(filter);
-        return this[keys[keys.length * Math.random() << 0]];
+        const keys = filter ? this.list().filter(filter) : this.list();
+
+        return keys[keys.length * Math.random() << 0];
     },
 };
 

@@ -58,27 +58,22 @@ const Select2 = {
 };
 
 const mutateFunctions = [
-    chord => { chord.type = ChordTypes.random(type => type !== chord.type); return chord; },
-    chord => { chord.extension = ChordExtensions.random(extension => extension !== chord.extension); return chord; },
+    chord => { chord.type = ChordTypes.random(type => type.name !== chord.type.name); return chord; },
+    chord => { chord.extension = ChordExtensions.random(extension => extension.name !== (chord.extension ? chord.extension.name : null)); return chord; },
     chord => { chord.inversion = chord.notes().length  * Math.random() << 0; return chord; },
     chord => KeyEvaluator.current().chords.randomTriad(),
     chord => {
-        let availableAlterations = [];
-        const chordAlterationNames = chord.alterations.map(a => a ? a.name : null);
+        // An array of flags is made which alterations are already in the chord. A random alteration gets mutated (added or removed).
+        const alterations = ChordAlterations.list().map(alteration => chord.alterations.find(a => a.name === alteration.name) ? 1 : 0);
+        const mutateAlterationIndex = alterations.length * Math.random() << 0;
 
-        for (let alteration of ChordAlterations) {
-            if (chordAlterationNames.indexOf(alteration.name) < 0) {
-                availableAlterations.push(alteration);
-            }
-        }
+        const alteration = ChordAlterations.list()[mutateAlterationIndex];
+        const alterationAlreadyInChord = alterations[mutateAlterationIndex];
 
-        if (availableAlterations.length === 0)
-            return chord;
-
-        const alteration = availableAlterations[availableAlterations.length * Math.random() << 0];
-        chord.alterations.push(alteration);
-
-        chord.alterations.sort((a, b) => a.name.substr(1) <= b.name.substr(1) ? 1 : -1);
+        // mutate
+        if (alterationAlreadyInChord)
+            chord.alterations.filter(a => a.name !== alteration.name);
+        else chord.alterations.push(alteration);
 
         return chord;
     },

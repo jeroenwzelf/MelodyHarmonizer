@@ -60,11 +60,7 @@ const LilyPadWriter = function() {
         const type = (chord.type.name === "min") ? "m" : chord.type.name;
         const extension = (chord.extension) ? chord.extension.name : "";
 
-        let alterations = "";
-        for (let alteration of chord.alterations)
-            alterations += "." + alteration.name.substr(1) + (alteration.name[0] === '#' ? '+' : '-');
-
-        return root + "1:" + type + extension + alterations;
+        return root + "1:" + type + extension;
     }
 
     function getLilyPadFormattedChords(song) {
@@ -127,6 +123,7 @@ const LilyPadWriter = function() {
             "  \\context {\n" +
             "    \\Score\n" +
             "    \\override SpacingSpanner.uniform-stretching = ##t\n" +
+            "    \\accidentalStyle forget" +
             "    }\n" +
             " }\n" +
             "}";

@@ -2,7 +2,7 @@ import Chord from "../../../harmony/Chord.js";
 import ChordExtensions from "../../../harmony/ChordExtensions.js";
 import ChordTypes from "../../../harmony/ChordTypes.js";
 
-const ScaleTriad = function(step, type, extension, alterations, inversion) {
+const ScaleTriad = function(step, type, extension, alterations) {
     if (alterations == null)
         alterations = [];
 
@@ -11,7 +11,7 @@ const ScaleTriad = function(step, type, extension, alterations, inversion) {
         type: type,
         extension: extension,
         alterations: alterations,
-        inversion: inversion,
+        inversion: 0,
 
         create: function(scale) {
             if (this.type != null)
@@ -20,7 +20,7 @@ const ScaleTriad = function(step, type, extension, alterations, inversion) {
             let chord = scale.chords.triad(this.step);
             chord.extension = this.extension;
             chord.alterations = this.alterations;
-            chord.inversion = this.inversion;
+            chord.inversion = 0;
 
             return chord;
         },

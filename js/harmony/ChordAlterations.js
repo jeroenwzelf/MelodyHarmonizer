@@ -21,8 +21,14 @@ const ChordAlterations = {
     s11: ChordAlteration("#11", intervals => sharpen(intervals, 17)),
     b13: ChordAlteration("b13", intervals => flatten(intervals, 21)),
 
-    [Symbol.iterator]: function* () { for (let key in this) if (this.hasOwnProperty(key) && key !== "list" && key !== "fromName") yield this[key]; },
-    list: function() { return (Object.keys(this)).filter(key => key !== "list" && key !== "fromName") },
+    [Symbol.iterator]: function* () { for (const value of this.list()) yield value; },
+    list: function() { return (Object.keys(this)).filter(key => this.hasOwnProperty(key) && key !== "list" && key !== "random" && key !== "fromName").map(key => this[key]); },
+    random: function(filter) {
+        const keys = filter ? this.list().filter(filter) : this.list();
+
+        return keys[keys.length * Math.random() << 0];
+    },
+
     fromName: name => {
         for (let alteration of ChordAlterations)
             if (name === alteration.name) return alteration;
