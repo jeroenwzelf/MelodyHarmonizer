@@ -36,8 +36,10 @@ const chordComplexity = function(chord) {
 const ChordComplexityEvaluator = function(individual) {
     let complexity = 0;
 
-    for (let i=0; i<SongConstants.measuresInSection; ++i)
-        complexity += chordComplexity(individual[i]);
+    for (let i=0; i<SongConstants.measuresInSection; ++i) {
+        individual[i].complexity = chordComplexity(individual[i]);
+        complexity += individual[i].complexity;
+    }
 
     return 1 - (complexity / SongConstants.measuresInSection);
 };

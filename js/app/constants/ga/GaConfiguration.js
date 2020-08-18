@@ -1,10 +1,10 @@
 const GaConfiguration = {
-    size: 40,
-    crossover: .4,
-    mutation: .6,
+    size: 30,
+    crossover: .8,
+    mutation: .5,
     iterations: 80,
     fittestAlwaysSurvives: true,
-    maxResults: 500,
+    maxResults: 100,
     fitnessThreshold: .8,
     generationThreshold: .7,
 };

@@ -70,6 +70,7 @@ const LilyPadWriter = function() {
                 chords +=
                     "% chord: " + (measure.playedChord ? measure.playedChord.toString() : "-") +
                     ", fitness: " + (measure.fitness ? measure.fitness : "-") +
+                    ", complexity: " + (measure.playedChord ? measure.playedChord.complexity : "-") +
                     ", execution time: " + (measure.executionTime ? measure.executionTime + "ms" : "-") +
                     "\n";
                 chords += " " + getLilyPadFormattedChord(measure.playedChord) + " |\n";
@@ -77,6 +78,13 @@ const LilyPadWriter = function() {
             chords += "\n";
         }
         return chords;
+    }
+
+    function averageFitnessValue(song) {
+        const fitnessValues = song.map(section => section.fitness);
+        const sum = fitnessValues.reduce((a, b) => (a ? (b ? a + b : a) : (b ? b : 0)), 0);
+
+        return sum / fitnessValues.length;
     }
 
     function averageExecutionTime(song) {
@@ -110,7 +118,8 @@ const LilyPadWriter = function() {
             "lead = \\chordmode {\n" +
                 getLilyPadFormattedChords(song) +
             "}\n\n" +
-            "% avg execution time: " + averageExecutionTime(song) + "ms\n\n" +
+            "% avg execution time: " + averageExecutionTime(song) + "ms\n" +
+            "% avg fitness value: " + averageFitnessValue(song) + "\n\n" +
             "\\score {\n" +
             " <<\n" +
             "  \\new ChordNames \\lead\n" +

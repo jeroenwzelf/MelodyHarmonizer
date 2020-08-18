@@ -72,13 +72,14 @@ const Chord = {
         return Chord.create(root, type, extension, alterations, 0);
     },
 
-    create: function(root, type, extension, alterations, inversion) {
+    create: function(root, type, extension, alterations, inversion, complexity) {
         return {
             root: root,
             type: type,
             extension: extension,
             alterations: cloneAlterations(alterations),
             inversion: inversion ? inversion : 0,
+            complexity: complexity ? complexity : 0,
 
             intervals: function() {
                 let intervals = [0];
@@ -120,13 +121,13 @@ const Chord = {
                 return this.root + this.type.name + extensionName + alterationNames;
             },
             clone: function() {
-                return Chord.create(this.root, this.type, this.extension, this.alterations, this.inversion);
+                return Chord.create(this.root, this.type, this.extension, this.alterations, this.inversion, this.complexity);
             },
         };
     },
 
     clone: function(chord) {
-        return Chord.create(chord.root, chord.type, chord.extension, chord.alterations, chord.inversion);
+        return Chord.create(chord.root, chord.type, chord.extension, chord.alterations, chord.inversion, chord.complexity);
     }
 };
 
