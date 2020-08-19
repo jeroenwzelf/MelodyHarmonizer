@@ -1,31 +1,37 @@
 import SongConstants from "../../constants/session/SongConstants.js";
 import ChordTypes from "../../../harmony/ChordTypes.js";
-import ChordAlterations from "../../../harmony/ChordAlterations.js";
 import ChordExtensions from "../../../harmony/ChordExtensions.js";
 
 const typeComplexity = function(type) {
-    return type === ChordTypes.augmented ? 1 : 0;
+    return type === ChordTypes.augmented ? 1 : 0.4;
 };
 
 const extensionComplexity = function(extension) {
     if (!extension)
-        return 0;
+        return 0.5;
 
-    let complexity = 1;
-    for (let availableExtension of ChordExtensions) {
-        if (availableExtension.name === extension.name)
-            return complexity / ChordExtensions.list().length;
-
-        ++complexity;
+    switch (extension.name) {
+        case ChordExtensions.six: return 0.4;
+        case ChordExtensions.min7: return 0.3;
+        case ChordExtensions.maj7: return 0.6;
+        case ChordExtensions.min9: return 0.7;
+        case ChordExtensions.maj9: return 0.8;
+        case ChordExtensions.min11: return 0.9;
+        case ChordExtensions.maj11: return 0.8;
+        case ChordExtensions.min13: return 1;
+        case ChordExtensions.maj13: return 1;
     }
 };
 
 const alterationsComplexity = function(alterations) {
-    return alterations.length / ChordAlterations.list().length;
+    if (alterations.length === 0)
+        return 0;
+
+    return 1;
 };
 
 const chordComplexity = function(chord) {
-    return (typeComplexity(chord.type) + extensionComplexity(chord.extension) + alterationsComplexity(chord.alterations)) / 3;
+    return (typeComplexity(chord.type) + (2 * extensionComplexity(chord.extension)) + (9 * alterationsComplexity(chord.alterations))) / 12;
 };
 
 /*

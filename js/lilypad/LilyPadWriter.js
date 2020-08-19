@@ -80,6 +80,13 @@ const LilyPadWriter = function() {
         return chords;
     }
 
+    function averageChordComplexity(song) {
+        const complexities = song.map(section => section.measures.map(measure => (measure.playedChord) ? parseFloat(measure.playedChord.complexity) : null)).flat(2);
+        const sum = complexities.reduce((a, b) => (a ? (b ? a + b : a) : (b ? b : 0)), 0);
+
+        return sum / complexities.length;
+    }
+
     function averageFitnessValue(song) {
         const fitnessValues = song.map(section => section.fitness);
         const sum = fitnessValues.reduce((a, b) => (a ? (b ? a + b : a) : (b ? b : 0)), 0);
@@ -119,6 +126,7 @@ const LilyPadWriter = function() {
                 getLilyPadFormattedChords(song) +
             "}\n\n" +
             "% avg execution time: " + averageExecutionTime(song) + "ms\n" +
+            "% avg chord complexity: " + averageChordComplexity(song) + "\n" +
             "% avg fitness value: " + averageFitnessValue(song) + "\n\n" +
             "\\score {\n" +
             " <<\n" +
