@@ -107,7 +107,11 @@ const Chord = {
                 return notes;
             },
 
-            play: function() { Events.Midi.Devices.Output.fireNotesOn(MidiNotes.stringsToKey(this.notes(), 4)) },
+            play: function() {
+                Events.Midi.Devices.Output.fireNotesOn(MidiNotes.stringsToKey(this.root, 3));
+                Events.Midi.Devices.Output.fireNotesOn(MidiNotes.stringsToKey(this.root, 4));
+                Events.Midi.Devices.Output.fireNotesOn(MidiNotes.stringsToKey(this.notes(), 5));
+            },
 
             toString: function() {
                 const extensionName = (this.extension != null) ? this.extension.name : "";

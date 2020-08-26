@@ -6,6 +6,10 @@ const Scale = function(notes) {
             notes: notes,
             chords: null,
 
+            contains: function(note) {
+                return notes.indexOf(note) >= 0;
+            },
+
             note: function(step) {
                 return notes[step % notes.length];
             },
