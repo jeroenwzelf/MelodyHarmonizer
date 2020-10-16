@@ -26,7 +26,7 @@ const MidiDevices = function(midi) {
 	});
 	Events.subscribe(Events.Midi.Devices.Output.noteOn, function(e) {
 		if (output != null)
-			output.noteOn(e.key, 90); // TODO: match velocity to input device average velocity in the last notes played?
+			output.noteOn(e.key, 90);
 	});
 	Events.subscribe(Events.Midi.Devices.Output.notesOff, function() {
 		if (output != null)
